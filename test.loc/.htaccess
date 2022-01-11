@@ -1,0 +1,23 @@
+php_flag display_startup_errors on
+php_flag display_errors on
+php_flag html_errors on
+php_flag  log_errors on
+
+RewriteEngine On 
+ 
+# Redirect all requests to index.html
+ 
+# RewriteCond %{HTTP_HOST} ^test.loc$ [NC]
+# RewriteRule . index.php [L]
+
+# Redirect non-existing pages to index.html
+ 
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+php_flag display_startup_errors on
+php_flag display_errors on
+php_flag html_errors on
+php_flag  log_errors on
+
