@@ -69,39 +69,39 @@
 //     echo "Число - ноль";
 // }
 
-$users = [
-    "5" => ["name" => "Test", "email" => "test@test.com", "lang" => "ru"],
-    "3" => ["name" => "Anton", "email" => "anton@gmail.com",  "lang" => "ua"],
-    "1" => ["name" => "Stewart", "email" => "stewart@gmail.com",  "lang" => "en"],
-    "23" => ["name" => "Bernardo", "email" => "bernardo@gmail.com",  "lang" => "fr"],
-    "11" => ["name" => "Maximillian", "email" => "maximilian@gmail.com",  "lang" => "de"],
-    "17" => ["name" => "Tyler", "email" => "tyler@gmail.com",  "lang" => "en"],
-    "8" => ["name" => "Sedrick", "email" => "sedrick@gmail.com",  "lang" => "ru"],
-];
+// $users = [
+//     "5" => ["name" => "Test", "email" => "test@test.com", "lang" => "ru"],
+//     "3" => ["name" => "Anton", "email" => "anton@gmail.com",  "lang" => "ua"],
+//     "1" => ["name" => "Stewart", "email" => "stewart@gmail.com",  "lang" => "en"],
+//     "23" => ["name" => "Bernardo", "email" => "bernardo@gmail.com",  "lang" => "fr"],
+//     "11" => ["name" => "Maximillian", "email" => "maximilian@gmail.com",  "lang" => "de"],
+//     "17" => ["name" => "Tyler", "email" => "tyler@gmail.com",  "lang" => "en"],
+//     "8" => ["name" => "Sedrick", "email" => "sedrick@gmail.com",  "lang" => "ru"],
+// ];
 
-$isElementExist = current($users);
-while ($isElementExist) {
-    $user = current($users);
-    echo $user["name"] . "<br>";
-    $isElementExist = next($users);
-}
+// $isElementExist = current($users);
+// while ($isElementExist) {
+//     $user = current($users);
+//     echo $user["name"] . "<br>";
+//     $isElementExist = next($users);
+// }
 
-$arr = [1, 4, 6, 9, 10, 3];
-$sum = 0;
-$mult = 1;
-$i = 0;
+// $arr = [1, 4, 6, 9, 10, 3];
+// $sum = 0;
+// $mult = 1;
+// $i = 0;
 
-while ($i < count($arr)) {
-    var_dump($i);
-    if ($arr[$i] % 2 == 0) {
-        $sum  += $arr[$i];
-    } else {
-        $mult *= $arr[$i];
-    }
-    $i++;
-}
-echo  "<br>" . $sum . "<br>";
-echo $mult . "<br>";
+// while ($i < count($arr)) {
+//     var_dump($i);
+//     if ($arr[$i] % 2 == 0) {
+//         $sum  += $arr[$i];
+//     } else {
+//         $mult *= $arr[$i];
+//     }
+//     $i++;
+// }
+// echo  "<br>" . $sum . "<br>";
+// echo $mult . "<br>";
 
 // for ($j = 2; $j <= 10; $j++) {
 //     for ($i = 1; $i <= 10; $i++) {
@@ -110,56 +110,185 @@ echo $mult . "<br>";
 //     echo "<hr>";
 // }
 
-foreach ($users as $user) {
-    echo "<pre>";
-    print_r($user);
-    echo "</pre>";
-}
+// foreach ($users as $user) {
+//     echo "<pre>";
+//     print_r($user);
+//     echo "</pre>";
+// }
 
-$arr = [1, 2, 3, 8, 9];
-$sum = 0;
-$mult = 1;
-foreach ($arr as $k => $item) { //  доступ как к значениям так и к ключам
-    if ($item % 2 == 0) {
-        $sum  += $item;
-    } else {
-        $mult *= $item;
-    }
-}
-echo  "<br>" . $sum . "<br>";
-echo $mult . "<br>";
+// $arr = [1, 2, 3, 8, 9];
+// $sum = 0;
+// $mult = 1;
+// foreach ($arr as $k => $item) { //  доступ как к значениям так и к ключам
+//     if ($item % 2 == 0) {
+//         $sum  += $item;
+//     } else {
+//         $mult *= $item;
+//     }
+// }
+// echo  "<br>" . $sum . "<br>";
+// echo $mult . "<br>";
 
-foreach ($users as $id => $user) {
-    echo $id . " ";
-    foreach ($user as $key => $val) {
-        echo $key . ":" . $val . " ";
-    }
-    echo "<br>";
-}
+// foreach ($users as $id => $user) {
+//     echo $id . " ";
+//     foreach ($user as $key => $val) {
+//         echo $key . ":" . $val . " ";
+//     }
+//     echo "<br>";
+// }
 
-$arr = ['green' => 'зеленый', 'red' => 'красный', 'blue' => 'голубой'];
-foreach ($arr as $k => $v) {
-    echo $k . " - " . $v . "<br>";
-}
+// $arr = ['green' => 'зеленый', 'red' => 'красный', 'blue' => 'голубой'];
+// foreach ($arr as $k => $v) {
+//     echo $k . " - " . $v . "<br>";
+// }
 
-$arr = ['html' => ['div', 'p', 'h'], 'css' => ['margin', 'padding', 'color'], "php" => ['foreach', 'echo', 'sum']];
-echo "<table>";
-echo "<tr>";
-foreach ($arr as $k => $v) {
-    echo "<th>" . $k .  "</th>";
-}
-echo "</tr>";
+// $arr = [
+//     'html' => ['div', 'p', 'h'],
+//     'css' => ['margin', 'padding', 'color'],
+//     "php" => ['foreach', 'echo', 'sum'],
+//     "js" => ['console', 'json']
+// ];
+// $max = 0;
+// echo "<table>";
+// echo "<tr>";
+// foreach ($arr as $k => $v) {
+//     echo "<th>" . $k .  "</th>";
+//     if (count($v) > $max) {
+//         $max = count($v);
+//     }
+// }
 
-$keys = array_keys($arr);
-for ($i = 0; $i < count($arr); $i++) {
-    echo "</tr>";
-    for ($j = 0; $j < count($arr[$keys[$i]]); $j++) {
-        echo "<td>" . $arr[$keys[$j]][$i] . "</td>";
-    }
-    echo "</tr>";
-}
+// $keys = array_keys($arr);
+// for ($i = 0; $i < $max; $i++) {
+//     echo "</tr>";
+//     for ($j = 0; $j < count($keys); $j++) {
+//         echo "<td>" . ($arr[$keys[$j]][$i] ?? '') . "</td>";
+//     }
+//     echo "</tr>";
+// }
+// echo "</table>";
 
-echo "</table>";
+// $num = [1, 2, 5, -3, 0, 9];
+// $mult = 1;
+// foreach ($num as $v) {
+//     $mult *= $v;
+//     if ($v == 0) {
+//         break;
+//     }
+//     echo $v . ", ";
+// }
+// echo "result: " . $mult;
+
+// $digit = rand(0, 100);
+// $num1 = [1, 0, 5, -3, 0, 9];
+// $num2 = [1, 2, 0, -3, 0, 9];
+// $sum = 0;
+// foreach ($num1 as $v) {
+//     $mult = 1;
+//     foreach ($num2 as $v2) {
+//         if ($v2 == 0) {
+//             $mult = 0;
+//             break;
+//         }
+//         echo $v2 . ", ";
+//         $mult *= $v2;
+//     }
+//     echo "<br>";
+//     $sum += $v + $mult;
+// }
+// echo "result: " . $sum;
+
+// for ($i = 0; $i <= 20; $i++) {
+//     if ($i % 2 !== 0) {
+//         continue;
+//     }
+//     echo $i . " ";
+// }
+
+// $num2 = [1, 2, 0, -3, 0, 9];
+// $message = "Нет";
+// foreach ($num2 as $item) {
+//     if ($item < 0) {
+//         $message = "Да";
+//         break;
+//     }
+// }
+// echo $message;
+
+// ! Strings in PHP
+// $message1 = 'it\'s me'; // экранирование
+// echo $message1 . "<br>";
+
+// $message2 = 'it\\s me'; // экранирование
+// echo $message2 . "<br>";
+
+// $message3 = "it's me"; // не нужно экранирование
+// echo $message3 . "<br>";
+
+// $word = "world";
+// echo "Hello " . $word . "<br>";
+
+// echo "Hello $word" . "<br>"; // с двойными кавычками работает распознавание переменной
+// echo 'Hello $word' . "<br>"; // с одинарными работать не будет
+
+// *функции для работы со строками
+// ? echo();
+// ? substr();
+// phpinfo();
+// die();
+$str = "Hello world!";
+// echo substr($str, 6, 6); // только для латинских символов. длина русских не 1 символ и будет работать не корректно
+
+// mb_substr работает с другими языками как substr для английских букв
+
+// ? strpos(); 
+// ? exlode();
+// var_dump(explode(" ", $str)); // разбить строку по символу на масств слов
+
+// ? str_relace();
+echo str_replace("!", "?", $str);
+echo "<br>";
+echo str_replace(["Hello", "world"], ["World", "hello"], $str);
+echo "<br>";
+
+// ? chr() vs ord() - ASCII
+
+// ? sha1, md5, crypt - salt needed. possible add salt to sha1 and md5
+// $pass = "11111";
+// $pass2 = "22222";
+// echo crypt($pass, "un94857n348975");
+// echo "<br>";
+// echo sha1($pass2);
+// echo "<br>";
+
+// $cryptedPass = "1a9b9508b6003b68ddfe03a9c8cbc4bd4388339b";
+// $plainPass = '';
+// for ($i = 0; $i <= 10000000; $i++) {
+//     if (sha1($i) === $cryptedPass || md5($i) === $cryptedPass) {
+//         $plainPass = $i;
+//     }
+// }
+// echo $plainPass;
+// echo "<br>";
+// ? htmlentities() htmlspecialchars()
+// ? implode()  - join()
+
+$words = ["Hello", "world"];
+echo implode(" ", $words)
+
+// ? lcfirst()  ucfirst()
+// ? strtolower(), strtoupper() ucwords() - последняя все слова с болльшой буквы
+
+// ? money_format() number_format()
+// ? parse_str() 
+// ? print() printf()
+// ? trim() удаляет символы в начале и в конце строки (можно любой другой символ)
+// ltrim() rtrim()
+// ? str_repeat()
+// ? strcmp() - сравнение строк (strcasecmp())
+// ? strip_tags() удалить теги из строки
+// ? strlen() длина строки
+// ? strstr() первое вхождение подстроки - возаращает подстроку начиная с нужного символа
 
 ?>
 
