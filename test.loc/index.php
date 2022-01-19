@@ -245,7 +245,7 @@ $str = "Hello world!";
 // ? exlode();
 // var_dump(explode(" ", $str)); // разбить строку по символу на масств слов
 
-// ? str_relace();
+// ? str_replace();
 echo str_replace("!", "?", $str);
 echo "<br>";
 echo str_replace(["Hello", "world"], ["World", "hello"], $str);
