@@ -49,7 +49,40 @@ echo "Modified string - numbers excluded: $string_after" . "<hr>";
 //?"Главным фактором языка РНР является практичность. РНР должен предоставить"
 //? после последнего слова пробелов добавлять не нужно
 
+$text = "Главным фактором языка РНР является практичность. РНР должен предоставить программисту средства для быстрого и эффективного решения поставленных задач. Практический характер РНР обусловлен пятью важными характеристиками: традиционностью, простотой, эффективностью, безопасностью, гибкостью. Существует еще одна «характеристика», которая делает РНР особенно привлекательным: он распространяется бесплатно! Причем, с открытыми исходными кодами ( Open Source ). Язык РНР будет казаться знакомым программистам, работающим в разных областях. Многие конструкции языка позаимствованы из Си, Perl. Код РНР очень похож на тот, который встречается в типичных программах на С или Pascal. Это заметно снижает начальные усилия при изучении РНР. PHP — язык, сочетающий достоинства Perl и Си и специально нацеленный на работу в Интернете, язык с универсальным (правда, за некоторыми оговорками) и ясным синтаксисом. И хотя PHP является довольно молодым языком, он обрел такую популярность среди web-программистов, что на данный момент является чуть ли не самым популярным языком для создания web-приложений (скриптов).";
+$textArr = explode(" ", $text);
+//echo print_r($textArr) . "<br>";
+$lineLength = 80;
+$formated = '';
+$tempStr = '';
+for ($i = 0; $i < count($textArr); $i++) {
+    if (mb_strlen($tempStr . " " . $textArr[$i]) <= $lineLength) {
+        $tempStr .= $textArr[$i] . " ";
+    } else {
+        rtrim($tempStr); // cut rigth space
+        $tempStrLen = mb_strlen($tempStr); // actual line length - 74
+        $spacesSpare = $lineLength - $tempStrLen; // how many spare spaces up to 80 symbols - 6
+        $tempArr = explode(" ", $tempStr); // array from trhe line
+        array_pop($tempArr); // cleaning last empty element
+        $words = count($tempArr); // number of words in the line
+        $internalSpaces = $words - 1; // number of internal spaces between words
+
+        echo '$tempStrLen: ' . $tempStrLen . '$spacesSpare: ' . $spacesSpare . '$words: ' . $words . ' $tempStr: ' .  sprintf($tempStr) . "<br>";
+
+        $tempStr .= "<br>";
+        $formated .= $tempStr;
+        $tempStr = '';
+        $i--;
+    }
+}
+$tempStr .= "<br/>";
+$formated .= $tempStr;
+echo  $formated . "<hr>";
+
 ?>
+
+
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
