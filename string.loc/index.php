@@ -50,24 +50,43 @@ echo "Modified string - numbers excluded: $string_after" . "<hr>";
 //? после последнего слова пробелов добавлять не нужно
 
 $text = "Главным фактором языка РНР является практичность. РНР должен предоставить программисту средства для быстрого и эффективного решения поставленных задач. Практический характер РНР обусловлен пятью важными характеристиками: традиционностью, простотой, эффективностью, безопасностью, гибкостью. Существует еще одна «характеристика», которая делает РНР особенно привлекательным: он распространяется бесплатно! Причем, с открытыми исходными кодами ( Open Source ). Язык РНР будет казаться знакомым программистам, работающим в разных областях. Многие конструкции языка позаимствованы из Си, Perl. Код РНР очень похож на тот, который встречается в типичных программах на С или Pascal. Это заметно снижает начальные усилия при изучении РНР. PHP — язык, сочетающий достоинства Perl и Си и специально нацеленный на работу в Интернете, язык с универсальным (правда, за некоторыми оговорками) и ясным синтаксисом. И хотя PHP является довольно молодым языком, он обрел такую популярность среди web-программистов, что на данный момент является чуть ли не самым популярным языком для создания web-приложений (скриптов).";
+
 $textArr = explode(" ", $text);
-//echo print_r($textArr) . "<br>";
+
 $lineLength = 80;
 $formated = '';
 $tempStr = '';
+$currentPos = 0;
+$searchFrom = 0;
+
 for ($i = 0; $i < count($textArr); $i++) {
     if (mb_strlen($tempStr . " " . $textArr[$i]) <= $lineLength) {
         $tempStr .= $textArr[$i] . " ";
     } else {
-        rtrim($tempStr); // cut rigth space
-        $tempStrLen = mb_strlen($tempStr); // actual line length - 74
-        $spacesSpare = $lineLength - $tempStrLen; // how many spare spaces up to 80 symbols - 6
-        $tempArr = explode(" ", $tempStr); // array from trhe line
-        array_pop($tempArr); // cleaning last empty element
-        $words = count($tempArr); // number of words in the line
-        $internalSpaces = $words - 1; // number of internal spaces between words
+        rtrim($tempStr);
 
-        echo '$tempStrLen: ' . $tempStrLen . '$spacesSpare: ' . $spacesSpare . '$words: ' . $words . ' $tempStr: ' .  sprintf($tempStr) . "<br>";
+        $tempStrLen = mb_strlen($tempStr);
+        $spacesSpare = $lineLength - $tempStrLen;
+        $tempArr = explode(" ", $tempStr);
+        array_pop($tempArr);
+        $words = count($tempArr);
+
+        echo '$tempStrLen: ' . $tempStrLen . '$spacesSpare: ' . $spacesSpare . '$words: ' . $words . ' $tempStr: ' .  $tempStr . "<br>";
+
+        if (mb_strlen($tempStr) < $lineLength) {
+            $searchFrom = 0;
+            for ($j = 0; $j < $spacesSpare && $searchFrom < mb_strlen($tempStr) - 1; $j++) {
+                $currentPos = mb_strpos($tempStr, ' ', $searchFrom);
+                $tempStr = mb_substr($tempStr, 0, $currentPos) . ' ' . mb_substr($tempStr, $currentPos);
+                rtrim($tempStr);
+                if ($currentPos + 2 < mb_strlen($tempStr) - 1) {
+                    $searchFrom = $currentPos + 2;
+                } elseif ($j < $spacesSpare) {
+                    rtrim($tempStr);
+                    $searchFrom = 0;
+                }
+            }
+        }
 
         $tempStr .= "<br>";
         $formated .= $tempStr;
@@ -75,13 +94,33 @@ for ($i = 0; $i < count($textArr); $i++) {
         $i--;
     }
 }
+
+$tempStrLen = mb_strlen($tempStr); // actual line length - 74
+$spacesSpare = $lineLength - $tempStrLen; // how many spare spaces up to 80 symbols - 6
+$tempArr = explode(" ", $tempStr); // array from trhe line
+array_pop($tempArr); // cleaning last empty element
+$words = count($tempArr); // number of words in the line
+if (mb_strlen($tempStr) < $lineLength) {
+    $searchFrom = 0;
+    for ($j = 0; $j < $spacesSpare && $searchFrom < mb_strlen($tempStr) - 1; $j++) {
+        $currentPos = mb_strpos($tempStr, ' ', $searchFrom);
+        $tempStr = mb_substr($tempStr, 0, $currentPos) . ' ' . mb_substr($tempStr, $currentPos);
+        rtrim($tempStr);
+        if ($currentPos + 2 < mb_strlen($tempStr) - 1) {
+            $searchFrom = $currentPos + 2;
+        } elseif ($j < $spacesSpare) {
+            rtrim($tempStr);
+            $searchFrom = 0;
+        }
+    }
+}
+
 $tempStr .= "<br/>";
 $formated .= $tempStr;
-echo  $formated . "<hr>";
+
+echo "<pre>$formated</pre>";
 
 ?>
-
-
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
