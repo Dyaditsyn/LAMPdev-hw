@@ -78,11 +78,12 @@ for ($i = 0; $i < count($textArr); $i++) {
             for ($j = 0; $j < $spacesSpare && $searchFrom < mb_strlen($tempStr) - 1; $j++) {
                 $currentPos = mb_strpos($tempStr, ' ', $searchFrom);
                 $tempStr = mb_substr($tempStr, 0, $currentPos) . ' ' . mb_substr($tempStr, $currentPos);
-                rtrim($tempStr);
+
                 if ($currentPos + 2 < mb_strlen($tempStr) - 1) {
                     $searchFrom = $currentPos + 2;
                 } elseif ($j < $spacesSpare) {
                     rtrim($tempStr);
+                    $j--;
                     $searchFrom = 0;
                 }
             }
@@ -110,6 +111,7 @@ if (mb_strlen($tempStr) < $lineLength) {
             $searchFrom = $currentPos + 2;
         } elseif ($j < $spacesSpare) {
             rtrim($tempStr);
+            $j--;
             $searchFrom = 0;
         }
     }
