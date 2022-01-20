@@ -71,8 +71,6 @@ for ($i = 0; $i < count($textArr); $i++) {
         array_pop($tempArr);
         $words = count($tempArr);
 
-        echo '$tempStrLen: ' . $tempStrLen . '$spacesSpare: ' . $spacesSpare . '$words: ' . $words . ' $tempStr: ' .  $tempStr . "<br>";
-
         if (mb_strlen($tempStr) < $lineLength) {
             $searchFrom = 0;
             for ($j = 0; $j < $spacesSpare && $searchFrom < mb_strlen($tempStr) - 1; $j++) {
