@@ -236,7 +236,7 @@
 // ? substr();
 // phpinfo();
 // die();
-$str = "Hello world!";
+// $str = "Hello world!";
 // echo substr($str, 6, 6); // только для латинских символов. длина русских не 1 символ и будет работать не корректно
 
 // mb_substr работает с другими языками как substr для английских букв
@@ -246,10 +246,10 @@ $str = "Hello world!";
 // var_dump(explode(" ", $str)); // разбить строку по символу на масств слов
 
 // ? str_replace();
-echo str_replace("!", "?", $str);
-echo "<br>";
-echo str_replace(["Hello", "world"], ["World", "hello"], $str);
-echo "<br>";
+// echo str_replace("!", "?", $str);
+// echo "<br>";
+// echo str_replace(["Hello", "world"], ["World", "hello"], $str);
+// echo "<br>";
 
 // ? chr() vs ord() - ASCII
 
@@ -273,8 +273,8 @@ echo "<br>";
 // ? htmlentities() htmlspecialchars()
 // ? implode()  - join()
 
-$words = ["Hello", "world"];
-echo implode(" ", $words)
+// $words = ["Hello", "world"];
+// echo implode(" ", $words)
 
 // ? lcfirst()  ucfirst()
 // ? strtolower(), strtoupper() ucwords() - последняя все слова с болльшой буквы
@@ -289,6 +289,36 @@ echo implode(" ", $words)
 // ? strip_tags() удалить теги из строки
 // ? strlen() длина строки
 // ? strstr() первое вхождение подстроки - возаращает подстроку начиная с нужного символа
+
+// ! работа с файлами PHP
+
+define("ROOT_PATH", dirname(__FILE__)); // константа адрес корня
+var_dump(dirname(__FILE__));
+$f = fopen(ROOT_PATH . DIRECTORY_SEPARATOR . "test.txt", "r+");
+// r+ запись в начало файла
+// a+ запись в конец файла
+
+if (!$f) {
+    echo "Ошибка открытия файла";
+    die();
+}
+//var_dump($f);
+fputs($f, "test"); // запись в файл 
+fseek($f, 0); // переместить указатель на начало файла
+
+while (!feof($f)) { // чтение файла построчно
+    echo fgets($f) . "<br>";
+}
+
+// file_exist() true/false проверяет или файл есть на диске
+// file_get_contents - считывает все содержимое файла
+
+$str = file_get_contents(ROOT_PATH . DIRECTORY_SEPARATOR . "test.txt", "r+");
+file_put_contents(ROOT_PATH . DIRECTORY_SEPARATOR . "test2.txt", "REcontent test2", FILE_APPEND);
+echo $str;
+
+fclose($f); // закрытие файла в конце работы
+
 
 ?>
 
