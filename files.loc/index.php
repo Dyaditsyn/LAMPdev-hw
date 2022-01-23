@@ -7,11 +7,28 @@
 //? пользователь ввел логин и пароль, в случае правильного ввода вывести логин на экран и так же создать новый файл или перезаписать 
 //? значение в существующем, используя логин в качестве имени файла, в этот файл заносить число правильных попыток входа для данного пользователя.
 
+// receiving data from the form
+$login = $_POST['login'];
+$pwd = $_POST['pwd'];
 
-if (isset($_POST)) {
-    print("Login: " . $_POST['login']);
-    print("<br>Email: " . $_POST['pwd']);
+$login = trim($login);
+$login = stripslashes($login);
+$login = strip_tags($login);
+$login = htmlspecialchars($login);
+
+$pwd = trim($pwd);
+$pwd = stripslashes($pwd);
+$pwd = strip_tags($pwd);
+$pwd = htmlspecialchars($pwd);
+
+
+if ((!empty($login)) && (!empty($pwd))) {
+    echo "Request submitted <br>";
+} else {
+    echo "Error! Fields are mandatory and can't be empty! <br>";
 }
+
+echo "login: " . $login . "password: " . $pwd . "<br>";
 
 ?>
 
@@ -32,14 +49,14 @@ if (isset($_POST)) {
             <ul class="wrapper">
                 <li class="form-row">
                     <label for="fname">Enter your login:</label>
-                    <input type="text" id="fname" name="login" placeholder="login">
+                    <input type="text" name="login" placeholder="login" required>
                 </li>
                 <li class="form-row">
                     <label for="pwd">Enter a Password:</label>
-                    <input type="password" id="pwd" name="pwd" placeholder="password">
+                    <input type="password" name="pwd" placeholder="password" required>
                 </li>
                 <li class="form-row">
-                    <input type="submit" id="submit" value="Send Request">
+                    <input type="submit" value="Send Request">
                 </li>
             </ul>
         </form>
