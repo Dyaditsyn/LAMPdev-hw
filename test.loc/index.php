@@ -319,6 +319,30 @@ echo $str;
 
 fclose($f); // закрытие файла в конце работы
 
+// ! работа с файлами PHP 2
+echo "<br><br> FILES PART-2 <br><br>";
+
+// csv format, transform to arrays
+// json format
+// json_encode()
+// json_decode() второй параметр true - выдаст в виде массива
+
+$users = [
+    "5" => ["name" => "Test", "email" => "test@test.com", "lang" => "ru"],
+    "3" => ["name" => "Anton", "email" => "anton@gmail.com",  "lang" => "ua"],
+    "1" => ["name" => "Stewart", "email" => "stewart@gmail.com",  "lang" => "en"],
+    "23" => ["name" => "Bernardo", "email" => "bernardo@gmail.com",  "lang" => "fr"],
+    "11" => ["name" => "Maximillian", "email" => "maximilian@gmail.com",  "lang" => "de"],
+    "17" => ["name" => "Tyler", "email" => "tyler@gmail.com",  "lang" => "en"],
+    "8" => ["name" => "Sedrick", "email" => "sedrick@gmail.com",  "lang" => "ru"],
+];
+
+//var_dump(json_encode($users));
+
+$users = json_encode($users);
+var_dump(json_decode($users, true));
+
+
 
 ?>
 
