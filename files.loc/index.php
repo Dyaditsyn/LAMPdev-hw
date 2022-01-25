@@ -13,16 +13,8 @@ define("ROOT_PATH", dirname(__FILE__));
 
 if ((!empty($_POST['login'])) && (!empty($_POST['pwd']))) {
     echo "Request submitted <br>";
-
-    $login = trim($_POST['login']);
-    $login = stripslashes($login);
-    $login = strip_tags($login);
-    $login = htmlspecialchars($login);
-
-    $pwd = trim($_POST['pwd']);
-    $pwd = stripslashes($pwd);
-    $pwd = strip_tags($pwd);
-    $pwd = htmlspecialchars($pwd);
+    $login = htmlspecialchars(strip_tags(stripslashes(trim($_POST['login']))));
+    $pwd = htmlspecialchars(strip_tags(stripslashes(trim($_POST['pwd']))));
 
     if (strlen($login) > 0 || strlen($pwd) > 0) {
         $userFile = fopen(ROOT_PATH . DIRECTORY_SEPARATOR . "users.txt", "r");
