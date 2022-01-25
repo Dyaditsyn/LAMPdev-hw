@@ -26,6 +26,10 @@ if ((!empty($_POST['login'])) && (!empty($_POST['pwd']))) {
 
     if (strlen($login) > 0 || strlen($pwd) > 0) {
         $userFile = fopen(ROOT_PATH . DIRECTORY_SEPARATOR . "users.txt", "r");
+        if (!$userFile) {
+            echo "Eror file opening";
+            die();
+        }
 
         do {
             $tempStrArr = explode(" ", fgets($userFile));
