@@ -292,57 +292,188 @@
 
 // ! работа с файлами PHP
 
-define("ROOT_PATH", dirname(__FILE__)); // константа адрес корня
-var_dump(dirname(__FILE__));
-$f = fopen(ROOT_PATH . DIRECTORY_SEPARATOR . "test.txt", "r+");
+// define("ROOT_PATH", dirname(__FILE__)); // константа адрес корня
+// var_dump(dirname(__FILE__));
+// $f = fopen(ROOT_PATH . DIRECTORY_SEPARATOR . "test.txt", "r+");
 // r+ запись в начало файла
 // a+ запись в конец файла
 
-if (!$f) {
-    echo "Ошибка открытия файла";
-    die();
-}
-//var_dump($f);
-fputs($f, "test"); // запись в файл 
-fseek($f, 0); // переместить указатель на начало файла
+// if (!$f) {
+//     echo "Ошибка открытия файла";
+//     die();
+// }
+// //var_dump($f);
+// fputs($f, "test"); // запись в файл 
+// fseek($f, 0); // переместить указатель на начало файла
 
-while (!feof($f)) { // чтение файла построчно
-    echo fgets($f) . "<br>";
-}
+// while (!feof($f)) { // чтение файла построчно
+//     echo fgets($f) . "<br>";
+// }
 
 // file_exist() true/false проверяет или файл есть на диске
 // file_get_contents - считывает все содержимое файла
 
-$str = file_get_contents(ROOT_PATH . DIRECTORY_SEPARATOR . "test.txt", "r+");
-file_put_contents(ROOT_PATH . DIRECTORY_SEPARATOR . "test2.txt", "REcontent test2", FILE_APPEND);
-echo $str;
+// $str = file_get_contents(ROOT_PATH . DIRECTORY_SEPARATOR . "test.txt", "r+");
+// file_put_contents(ROOT_PATH . DIRECTORY_SEPARATOR . "test2.txt", "REcontent test2", FILE_APPEND);
+// echo $str;
 
-fclose($f); // закрытие файла в конце работы
+// fclose($f); // закрытие файла в конце работы
 
 // ! работа с файлами PHP 2
-echo "<br><br> FILES PART-2 <br><br>";
+// echo "<br><br> FILES PART-2 <br><br>";
 
 // csv format, transform to arrays
 // json format
 // json_encode()
 // json_decode() второй параметр true - выдаст в виде массива
 
-$users = [
-    "5" => ["name" => "Test", "email" => "test@test.com", "lang" => "ru"],
-    "3" => ["name" => "Anton", "email" => "anton@gmail.com",  "lang" => "ua"],
-    "1" => ["name" => "Stewart", "email" => "stewart@gmail.com",  "lang" => "en"],
-    "23" => ["name" => "Bernardo", "email" => "bernardo@gmail.com",  "lang" => "fr"],
-    "11" => ["name" => "Maximillian", "email" => "maximilian@gmail.com",  "lang" => "de"],
-    "17" => ["name" => "Tyler", "email" => "tyler@gmail.com",  "lang" => "en"],
-    "8" => ["name" => "Sedrick", "email" => "sedrick@gmail.com",  "lang" => "ru"],
-];
+// $users = [
+//     "5" => ["name" => "Test", "email" => "test@test.com", "lang" => "ru"],
+//     "3" => ["name" => "Anton", "email" => "anton@gmail.com",  "lang" => "ua"],
+//     "1" => ["name" => "Stewart", "email" => "stewart@gmail.com",  "lang" => "en"],
+//     "23" => ["name" => "Bernardo", "email" => "bernardo@gmail.com",  "lang" => "fr"],
+//     "11" => ["name" => "Maximillian", "email" => "maximilian@gmail.com",  "lang" => "de"],
+//     "17" => ["name" => "Tyler", "email" => "tyler@gmail.com",  "lang" => "en"],
+//     "8" => ["name" => "Sedrick", "email" => "sedrick@gmail.com",  "lang" => "ru"],
+// ];
 
-//var_dump(json_encode($users));
+// //var_dump(json_encode($users));
 
-$users = json_encode($users);
-var_dump(json_decode($users, true));
+// $users = json_encode($users);
+// var_dump(json_decode($users, true));
 
+//? Functions 1
 
+declare(strict_types=1);
+require("config.php");
+
+$a = "Hello";
+$b = "world!";
+
+function message(string $a, string $b)
+{
+    return  $a . " " . $b;
+}
+
+echo message($a, $b);
+// анонимные функции замыкания
+// use
+
+function multTable(int $number): array
+{
+    $result = [];
+    for ($i = 0; $i <= 10; $i++) {
+        $result[$number . "x" . $i] = $number * $i;
+    }
+    return $result;
+}
+
+echo "<pre>";
+print_r(multTable(2));
+echo "</pre>";
+
+echo "<hr>";
+
+function sqr(float $number): float
+{
+    return $number * $number;
+}
+echo sqr(2.5);
+
+echo "<hr>";
+
+function calc(float $number1, float $number2, float $number3): float
+{
+    if ($number3 == 0) {
+        return 0;
+    }
+    return ($number1 - $number2) / $number3;
+}
+echo calc(4, 3, 0);
+
+echo "<hr>";
+
+function calcDay(int $number): string
+{
+    if (!in_array($number, range(1, 7))) {
+        return "Неправильный день";
+    }
+    switch ($number) {
+        case 1:
+            $day = "Пн";
+            break;
+        case 2:
+            $day = "Вт";
+            break;
+        case 3:
+            $day = "Ср";
+            break;
+        case 4:
+            $day = "Чт";
+            break;
+        case 5:
+            $day = "Пт";
+            break;
+        case 6:
+            $day =  "Сб";
+            break;
+        case 7:
+            $day = "Вс";
+            break;
+    }
+    return $day;
+}
+
+echo calcDay(1);
+echo "<br>";
+echo calcDay(8);
+echo "<hr>";
+
+function checkNotPositive(int $number): bool
+{
+    return ($number < 0) ? true : false;
+}
+var_dump(checkNotPositive(2));
+var_dump(checkNotPositive(-2));
+echo "<hr>";
+
+function factorial($n)
+{
+    var_dump($n);
+    if ($n <= 1) return 1;
+    return $n * factorial($n - 1); // здесь происходит повторный вызов функции
+}
+
+echo factorial(3);
+echo "<hr>";
+
+function getDivisors(int $n): array
+{
+    $divisors = [];
+    for ($i = 1; $i <= $n; $i++) {
+        if ($n % $i == 0) {
+            $divisors[] = $i;
+        }
+    }
+    return $divisors;
+}
+
+echo "<pre>";
+print_r(getDivisors(21));
+echo "</pre>";
+echo "<hr>";
+
+function getCommonDivisors(int $n1, int $n2): array
+{
+    $div1 = getDivisors($n1);
+    $div2 = getDivisors($n2);
+    return array_intersect($div1, $div2);
+}
+
+echo "<pre>";
+print_r(getCommonDivisors(10, 15));
+echo "</pre>";
+echo "<hr>";
 
 ?>
 
