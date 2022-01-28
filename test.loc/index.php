@@ -342,10 +342,11 @@
 // $users = json_encode($users);
 // var_dump(json_decode($users, true));
 
-//? Functions 1
+//? Functions
 
 declare(strict_types=1);
-require("config.php");
+require_once("config.php");
+
 
 $a = "Hello";
 $b = "world!";
@@ -474,6 +475,33 @@ echo "<pre>";
 print_r(getCommonDivisors(10, 15));
 echo "</pre>";
 echo "<hr>";
+
+//? Sessions and SuperGlobal
+// $_SERVER
+// echo "<pre>";
+// print_r($_SERVER);
+// echo "</pre>";
+// echo "<hr>";
+
+//$_GET
+echo "<pre>";
+print_r($_GET);
+echo "</pre>";
+echo "<hr>";
+
+//$_POST
+//$_REQUEST
+//$_ENV
+//geenv() putenv()
+
+//$_SESSION
+
+$_SESSION['user'] = "Sergey";
+if (!empty($_SESSION['user'])) {
+    echo "Hello " . $_SESSION['user'];
+}
+// unset($_SESSION['user']);
+// session_destroy(); как логаут на сайте - удалить всю сессию
 
 ?>
 
