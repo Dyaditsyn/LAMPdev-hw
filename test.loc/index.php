@@ -496,12 +496,20 @@ echo "<hr>";
 
 //$_SESSION
 
+//$_SESSION['message'] = "Hello";
+// echo $_SESSION['message'];
+
 $_SESSION['user'] = "Sergey";
 if (!empty($_SESSION['user'])) {
     echo "Hello " . $_SESSION['user'];
 }
+
 // unset($_SESSION['user']);
 // session_destroy(); как логаут на сайте - удалить всю сессию
+
+//? Сохранение данных пользователей с помощью двух механизмов
+// на сервере - механизм сессий, в браузере - механизм куков
+
 
 ?>
 
