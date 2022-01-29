@@ -18,12 +18,12 @@
         <form method="POST" action="index.php">
             <ul class="wrapper">
                 <h2>Please select your products</h2>
-                <li class="form-row">
-                    <label>Bike</label>
-                    <input type="checkbox" name="login">
-                </li>
 
-                <li class="form-row">
+                <?php foreach ($products as $product) {
+                    prod($product);
+                } ?>
+
+                <li class=" form-row">
                     <input type="submit" value="Add to basket">
                 </li>
             </ul>

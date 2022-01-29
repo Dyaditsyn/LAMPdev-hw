@@ -1,1 +1,1 @@
-[{"product":"Bike","price":"199","qty":"1"},{"product":"Towels","price":"24","qty":"3"},{"product":"Shoes","price":"69","qty":"2"},{"product":"Mouse","price":"45","qty":"1"},{"product":"Shirt","price":"31","qty":"4"}]
+[{"name":"Bike","price":"199","qty":"1"},{"name":"Towels","price":"24","qty":"3"},{"name":"Shoes","price":"69","qty":"2"},{"name":"Mouse","price":"45","qty":"1"},{"name":"Shirt","price":"31","qty":"4"}]
