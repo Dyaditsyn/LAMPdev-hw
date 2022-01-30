@@ -1,5 +1,4 @@
 <?php
-
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "config.php";
 
 echo "Hello, you selected following products:";
