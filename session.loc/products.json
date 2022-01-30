@@ -1,1 +1,7 @@
-[{"name":"Bike","price":"199","qty":"1"},{"name":"Towels","price":"24","qty":"3"},{"name":"Shoes","price":"69","qty":"2"},{"name":"Mouse","price":"45","qty":"1"},{"name":"Shirt","price":"31","qty":"4"}]
+[
+  { "name": "Bike", "price": "199", "qty": "1" },
+  { "name": "Towels", "price": "24", "qty": "3" },
+  { "name": "Shoes", "price": "69", "qty": "2" },
+  { "name": "Mouse", "price": "45", "qty": "1" },
+  { "name": "Shirt", "price": "31", "qty": "4" }
+]

@@ -19,12 +19,22 @@
             <ul class="wrapper">
                 <h2>Please select your products</h2>
 
-                <?php foreach ($products as $product) {
-                    prod($product);
-                } ?>
+                <?php
+                require dirname(__FILE__) . DIRECTORY_SEPARATOR . "functions.php";
+                $products = json_to_arr();
+                foreach ($products as $product) { ?>
+
+                    <li class="form-row">
+                        <label>
+                            <input type="checkbox" name="products[]" value="<?php echo $product['name']; ?>" />
+                            <?php echo $product['name'] . " $" . $product['price'] . " qty: " . $product['qty']; ?>
+                        </label>
+                    </li>
+
+                <?php } ?>
 
                 <li class=" form-row">
-                    <input type="submit" value="Add to basket">
+                    <input type="submit" name="submit" value="Add to basket">
                 </li>
             </ul>
         </form>
