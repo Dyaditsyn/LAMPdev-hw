@@ -1,18 +1,38 @@
 <?php
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "config.php";
-require ROOT_PATH . DIRECTORY_SEPARATOR . "login.php";
+require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . "header.php";
+require ROOT_PATH . DIRECTORY_SEPARATOR . "functions.php";
+require ROOT_PATH . DIRECTORY_SEPARATOR . "store.php";
+?>
 
-$products = json_to_arr();
+<?php if (!empty($_GET['error'])) : ?>
+    <h3>No products selected</h3>
+<?php endif; ?>
 
-if (isset($_POST["submit"])) {
-    if (!empty($_POST["products"])) {
-        $_SESSION["products"] = $_POST["products"];
-        header("Location: home.php");
-        die();
-    } else {
-        $_SESSION["products"] = [];
-        echo "No products selected";
-        header("Location: login.php?error=1");
-        die();
-    }
-}
+<div class="main_page">
+    <h1>PHP session homework </h1>
+    <form method="POST" action="index.php">
+        <ul class="wrapper">
+            <h2>Please select your products</h2>
+
+            <?php
+            $products = json_to_arr();
+            foreach ($products as $product) { ?>
+                <li class="form-row">
+                    <label>
+                        <input type="checkbox" name="products[]" value="<?php echo $product['name']; ?>" />
+                        <?php echo $product['name'] . " $" . $product['price'] . " qty: " . $product['qty']; ?>
+                    </label>
+                </li>
+            <?php } ?>
+
+            <li class=" form-row">
+                <input type="submit" name="submit" value="Add to basket">
+            </li>
+        </ul>
+    </form>
+</div>
+
+<?php
+require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . "footer.php";
+?>
