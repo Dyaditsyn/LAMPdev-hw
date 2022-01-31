@@ -3,6 +3,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "config.php";
 require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . "header.php";
 require ROOT_PATH . DIRECTORY_SEPARATOR . "functions.php";
 require ROOT_PATH . DIRECTORY_SEPARATOR . "store.php";
+$products = json_to_arr(ROOT_PATH . DIRECTORY_SEPARATOR . "products.json");
 ?>
 
 <?php if (!empty($_GET['error'])) : ?>
@@ -16,7 +17,6 @@ require ROOT_PATH . DIRECTORY_SEPARATOR . "store.php";
             <h2>Please select your products</h2>
 
             <?php
-            $products = json_to_arr();
             foreach ($products as $product) { ?>
                 <li class="form-row">
                     <label>
