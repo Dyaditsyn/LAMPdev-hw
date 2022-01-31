@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "config.php";
-
+require ROOT_PATH . DIRECTORY_SEPARATOR . "functions.php";
 $products = json_to_arr(ROOT_PATH . DIRECTORY_SEPARATOR . "products.json");
 
 if (isset($_POST["submit"])) {

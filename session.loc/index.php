@@ -2,7 +2,6 @@
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "config.php";
 require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . "header.php";
 require ROOT_PATH . DIRECTORY_SEPARATOR . "functions.php";
-require ROOT_PATH . DIRECTORY_SEPARATOR . "store.php";
 $products = json_to_arr(ROOT_PATH . DIRECTORY_SEPARATOR . "products.json");
 ?>
 
@@ -12,7 +11,7 @@ $products = json_to_arr(ROOT_PATH . DIRECTORY_SEPARATOR . "products.json");
 
 <div class="main_page">
     <h1>PHP session homework </h1>
-    <form method="POST" action="index.php">
+    <form method="POST" action="store.php">
         <ul class="wrapper">
             <h2>Please select your products</h2>
 
