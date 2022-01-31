@@ -21,3 +21,12 @@
   flex: 2;
   padding: 0.5em;
 }
+
+.check {
+  display: flex;
+  padding: 0.5em;
+}
+
+.check > input {
+  margin-left: 1em;
+}

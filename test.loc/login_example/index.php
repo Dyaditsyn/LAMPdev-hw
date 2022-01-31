@@ -9,6 +9,11 @@ if ((!empty($_POST['login'])) && (!empty($_POST['password']))) {
         foreach ($users as $user) {
             if ($user['login'] == $_POST['login'] && $user['password'] == $_POST['password']) {
                 $_SESSION['username'] = $user['login'];
+                if (!empty($_POST["remember"])) {
+                    $time = time();
+                    $cookie = $user['login'] . ":" . $time . ":" . generateSignature($user['login'], $time);
+                    setcookie("username", $cookie, time() + (10 * 365 * 24 * 60 * 60));
+                }
                 header("Location: /login_example/home.php");
                 die();
             }

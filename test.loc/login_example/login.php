@@ -19,14 +19,18 @@
             <ul class="wrapper">
                 <li class="form-row">
                     <label for="login">Enter your login:</label>
-                    <input type="text" name="login" placeholder="login" required>
+                    <input type="text" name="login" id="login" placeholder="login" required />
                 </li>
                 <li class="form-row">
                     <label for="password">Enter a Password:</label>
-                    <input type="password" name="password" placeholder="password" required>
+                    <input type="password" name="password" id="password" placeholder="password" required />
+                </li>
+                <li class="check">
+                    <label for="remember">Remember me</label>
+                    <input type="checkbox" name="remember" id="remember" />
                 </li>
                 <li class="form-row">
-                    <input type="submit" value="Send Request">
+                    <input type="submit" value="Send Request" />
                 </li>
             </ul>
         </form>

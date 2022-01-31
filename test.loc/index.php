@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+// phpinfo();
 // $a = 1;
 // $b = 2;
 // $rusEng = [
@@ -337,144 +340,144 @@
 //     "8" => ["name" => "Sedrick", "email" => "sedrick@gmail.com",  "lang" => "ru"],
 // ];
 
-// //var_dump(json_encode($users));
+//var_dump(json_encode($users));
 
 // $users = json_encode($users);
 // var_dump(json_decode($users, true));
 
 //? Functions
 
-declare(strict_types=1);
-require_once("config.php");
+// declare(strict_types=1);
+// require_once("config.php");
 
 
-$a = "Hello";
-$b = "world!";
+// $a = "Hello";
+// $b = "world!";
 
-function message(string $a, string $b)
-{
-    return  $a . " " . $b;
-}
+// function message(string $a, string $b)
+// {
+//     return  $a . " " . $b;
+// }
 
-echo message($a, $b);
+// echo message($a, $b);
 // анонимные функции замыкания
 // use
 
-function multTable(int $number): array
-{
-    $result = [];
-    for ($i = 0; $i <= 10; $i++) {
-        $result[$number . "x" . $i] = $number * $i;
-    }
-    return $result;
-}
+// function multTable(int $number): array
+// {
+//     $result = [];
+//     for ($i = 0; $i <= 10; $i++) {
+//         $result[$number . "x" . $i] = $number * $i;
+//     }
+//     return $result;
+// }
 
-echo "<pre>";
-print_r(multTable(2));
-echo "</pre>";
+// echo "<pre>";
+// print_r(multTable(2));
+// echo "</pre>";
 
-echo "<hr>";
+// echo "<hr>";
 
-function sqr(float $number): float
-{
-    return $number * $number;
-}
-echo sqr(2.5);
+// function sqr(float $number): float
+// {
+//     return $number * $number;
+// }
+// echo sqr(2.5);
 
-echo "<hr>";
+// echo "<hr>";
 
-function calc(float $number1, float $number2, float $number3): float
-{
-    if ($number3 == 0) {
-        return 0;
-    }
-    return ($number1 - $number2) / $number3;
-}
-echo calc(4, 3, 0);
+// function calc(float $number1, float $number2, float $number3): float
+// {
+//     if ($number3 == 0) {
+//         return 0;
+//     }
+//     return ($number1 - $number2) / $number3;
+// }
+// echo calc(4, 3, 0);
 
-echo "<hr>";
+// echo "<hr>";
 
-function calcDay(int $number): string
-{
-    if (!in_array($number, range(1, 7))) {
-        return "Неправильный день";
-    }
-    switch ($number) {
-        case 1:
-            $day = "Пн";
-            break;
-        case 2:
-            $day = "Вт";
-            break;
-        case 3:
-            $day = "Ср";
-            break;
-        case 4:
-            $day = "Чт";
-            break;
-        case 5:
-            $day = "Пт";
-            break;
-        case 6:
-            $day =  "Сб";
-            break;
-        case 7:
-            $day = "Вс";
-            break;
-    }
-    return $day;
-}
+// function calcDay(int $number): string
+// {
+//     if (!in_array($number, range(1, 7))) {
+//         return "Неправильный день";
+//     }
+//     switch ($number) {
+//         case 1:
+//             $day = "Пн";
+//             break;
+//         case 2:
+//             $day = "Вт";
+//             break;
+//         case 3:
+//             $day = "Ср";
+//             break;
+//         case 4:
+//             $day = "Чт";
+//             break;
+//         case 5:
+//             $day = "Пт";
+//             break;
+//         case 6:
+//             $day =  "Сб";
+//             break;
+//         case 7:
+//             $day = "Вс";
+//             break;
+//     }
+//     return $day;
+// }
 
-echo calcDay(1);
-echo "<br>";
-echo calcDay(8);
-echo "<hr>";
+// echo calcDay(1);
+// echo "<br>";
+// echo calcDay(8);
+// echo "<hr>";
 
-function checkNotPositive(int $number): bool
-{
-    return ($number < 0) ? true : false;
-}
-var_dump(checkNotPositive(2));
-var_dump(checkNotPositive(-2));
-echo "<hr>";
+// function checkNotPositive(int $number): bool
+// {
+//     return ($number < 0) ? true : false;
+// }
+// var_dump(checkNotPositive(2));
+// var_dump(checkNotPositive(-2));
+// echo "<hr>";
 
-function factorial($n)
-{
-    var_dump($n);
-    if ($n <= 1) return 1;
-    return $n * factorial($n - 1); // здесь происходит повторный вызов функции
-}
+// function factorial($n)
+// {
+//     var_dump($n);
+//     if ($n <= 1) return 1;
+//     return $n * factorial($n - 1); // здесь происходит повторный вызов функции
+// }
 
-echo factorial(3);
-echo "<hr>";
+// echo factorial(3);
+// echo "<hr>";
 
-function getDivisors(int $n): array
-{
-    $divisors = [];
-    for ($i = 1; $i <= $n; $i++) {
-        if ($n % $i == 0) {
-            $divisors[] = $i;
-        }
-    }
-    return $divisors;
-}
+// function getDivisors(int $n): array
+// {
+//     $divisors = [];
+//     for ($i = 1; $i <= $n; $i++) {
+//         if ($n % $i == 0) {
+//             $divisors[] = $i;
+//         }
+//     }
+//     return $divisors;
+// }
 
-echo "<pre>";
-print_r(getDivisors(21));
-echo "</pre>";
-echo "<hr>";
+// echo "<pre>";
+// print_r(getDivisors(21));
+// echo "</pre>";
+// echo "<hr>";
 
-function getCommonDivisors(int $n1, int $n2): array
-{
-    $div1 = getDivisors($n1);
-    $div2 = getDivisors($n2);
-    return array_intersect($div1, $div2);
-}
+// function getCommonDivisors(int $n1, int $n2): array
+// {
+//     $div1 = getDivisors($n1);
+//     $div2 = getDivisors($n2);
+//     return array_intersect($div1, $div2);
+// }
 
-echo "<pre>";
-print_r(getCommonDivisors(10, 15));
-echo "</pre>";
-echo "<hr>";
+// echo "<pre>";
+// print_r(getCommonDivisors(10, 15));
+// echo "</pre>";
+// echo "<hr>";
 
 //? Sessions and SuperGlobal
 // $_SERVER
@@ -484,10 +487,10 @@ echo "<hr>";
 // echo "<hr>";
 
 //$_GET
-echo "<pre>";
-print_r($_GET);
-echo "</pre>";
-echo "<hr>";
+// echo "<pre>";
+// print_r($_GET);
+// echo "</pre>";
+// echo "<hr>";
 
 //$_POST
 //$_REQUEST
@@ -499,10 +502,10 @@ echo "<hr>";
 //$_SESSION['message'] = "Hello";
 // echo $_SESSION['message'];
 
-$_SESSION['user'] = "Sergey";
-if (!empty($_SESSION['user'])) {
-    echo "Hello " . $_SESSION['user'];
-}
+// $_SESSION['user'] = "Sergey";
+// if (!empty($_SESSION['user'])) {
+//     echo "Hello " . $_SESSION['user'];
+// }
 
 // unset($_SESSION['user']);
 // session_destroy(); как логаут на сайте - удалить всю сессию
@@ -510,7 +513,102 @@ if (!empty($_SESSION['user'])) {
 //? Сохранение данных пользователей с помощью двух механизмов
 // на сервере - механизм сессий, в браузере - механизм куков
 
+//? COOKIES, ссылки
+// $maxlifetime = ini_get("session.gc_maxlifetime");
+// var_dump($maxlifetime); // 1140s session lifetime
+//SetCookie("My_Cookie", "Value", time() +3600) // для удаления присваиваем пустое значение
+// для чтения используется ассоциативный массив суперглобальной переменной $_COOKIE
 
+
+// Указатели (ссылки)
+// изменения которые создает форич существуют только пока работает форич (не меняет исходный массив)
+// foreach ($users as &$user) { - с амперсандом будет создавать ссылку на оригинальный массив вместо создания копии по дефолту
+//     /something///
+// }unset($user) в конце работы надо обязательно удалить эту ссылку
+
+// $a = 3;
+// $b = &$a;
+// ++$b;
+// var_dump($a);
+
+//? Динамическое создание переменных
+// $users = [
+//     "5" => ["name" => "Test", "email" => "test@test.com", "lang" => "ru"],
+//     "3" => ["name" => "Anton", "email" => "anton@gmail.com",  "lang" => "ua"],
+//     "1" => ["name" => "Stewart", "email" => "stewart@gmail.com",  "lang" => "en"]
+// ];
+// foreach ($users as &$user) {
+//     ${$user["name"]} = $user["email"];
+// }
+// unset($user);
+// $a = "user1";
+//$$a = 3; // будет создана переменная с именем "user"
+//var_dump($user1); // 3
+//var_dump($Anton); // -> anton@test.com
+
+//? API - Application Program Intreface
+// cURL
+
+// create curl resource
+$ch = curl_init();
+
+// set url
+curl_setopt($ch, CURLOPT_URL, "http://dummy.restapiexample.com/api/v1/employees");
+
+//return the transfer as a string
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+// $output contains the output string
+$output = curl_exec($ch);
+
+// close curl resource to free up system resources
+curl_close($ch);
+
+
+$employess = json_decode($output, true);
+$id = $employess['data'][count($employess['data']) - 1]['id'];
+var_dump($id);
+
+echo '<pre>';
+print_r($employess);
+echo '</pre>';
+//==============================================================
+$ch = curl_init();
+
+// set url
+curl_setopt($ch, CURLOPT_URL, "http://dummy.restapiexample.com/api/v1/employee/" . $id);
+
+//return the transfer as a string
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+// $output contains the output string
+$output = curl_exec($ch);
+
+// close curl resource to free up system resources
+curl_close($ch);
+
+echo '<pre>';
+print_r(json_decode($output, true));
+echo '</pre>';
+
+
+//=======================================================
+// создание нового работника
+// по умолчанию используется гет запрос а нам нужен пост
+$payload = json_encode(["name" => "test1", "salary" => "100000", "age" => 30]);
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "http://dummy.restapiexample.com/api/v1/create");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+$output = curl_exec($ch);
+curl_close($ch);
+
+
+echo '<pre>';
+print_r(json_decode($output, true));
+echo '</pre>';
 ?>
 
 
