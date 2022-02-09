@@ -1,65 +1,44 @@
 <?php
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "config.php";
 
-// require ROOT_PATH . DIRECTORY_SEPARATOR . "functions.php";
-// $products = json_to_arr(ROOT_PATH . DIRECTORY_SEPARATOR . "products.json");
-
-// if (isset($_POST["submit"])) {
-//     if (!empty($_POST["products"])) {
-//         $_SESSION["products"] = [];
-//         for ($i = 0; $i < count($_POST["products"]); $i++) {
-//             for ($j = 0; $j < count($products); $j++)
-//                 if ($_POST["products"][$i] === $products[$j]["name"]) {
-//                     $_SESSION["products"][] = $products[$j];
-//                 }
-//         }
-//         header("Location: home.php");
-//         die();
-//     }
-//     header("Location: index.php?error=1");
-//     die();
-// }
-
-// if (isset($_POST["submit"])) {
-//     if (!empty($_POST["products"])) {
-//         $_SESSION["products"] = [];
-//         for ($i = 0; $i < count($_POST["products"]); $i++) {
-//             for ($j = 0; $j < count($products); $j++)
-//                 if ($_POST["products"][$i] === $products[$j]["name"]) {
-//                     $_SESSION["products"][] = $products[$j];
-//                 }
-//         }
-//         header("Location: home.php");
-//         die();
-//     }
-//     header("Location: index.php?error=1");
-//     die();
-// }
-
 if ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign in")) {
 
-    $username = $_POST['login'];
-    $password = $_POST['password'];
-    $URL = 'http://www.myapi.loc/auth.php';
+    $url = 'http://www.myapi.loc/auth.php';
 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $URL);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 30); //timeout after 30 seconds
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-    curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
+    $ch = curl_init($url);
+    # Setup request to send json via POST.
+    $payload = json_encode(["login" => $_POST['login'], "password" => $_POST['password']]);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    # Return response instead of printing.
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    # Send request.
     $result = curl_exec($ch);
-    $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);   //get status code
+    $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
+    $resultArr = json_decode($result, true);
+
     echo 'result: <pre>';
-    echo json_decode($result);
+    print_r($resultArr);
     echo '</pre>';
-    echo 'status: <pre>';
-    print_r($status_code);
-    echo '</pre>';
-    //echo "It came from LOGIN page";
-} // elseif ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign up")) {
+
+    if ($resultArr['status'] === 200) {
+        $_SESSION['user'] = $resultArr['data'];
+        if (!empty($_POST["remember"])) {
+            $time = time();
+            $cookie = $user['login'] . ":" . $time . ":" . generateSignature($user['login'], $time);
+            setcookie("login", $cookie, time() + (10 * 365 * 24 * 60 * 60));
+        }
+        header("Location: http://www.mysite.loc/home.php");
+        die();
+    } else {
+        header("Location: http://www.mysite.loc/index.php?error=1");
+        die();
+    }
+} 
+
+// elseif ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign up")) {
 
 //     $payload = json_encode([
 //         "login" => $_POST['login'],

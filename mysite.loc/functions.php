@@ -6,5 +6,11 @@
             $users = file_get_contents($path);
             $users = json_decode($users, true);
         }
-        return !empty($users) ? $users : "Error products.json file opening";
+        return !empty($users) ? $users : "Error users.json file opening";
+    }
+
+    function generateSignature($username, $time)
+    {
+        $salt = '13wrwerwe44';
+        return sha1($username . $time . $salt);
     }
