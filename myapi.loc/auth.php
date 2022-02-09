@@ -1,12 +1,6 @@
 <?php
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "config.php";
 require ROOT_PATH . DIRECTORY_SEPARATOR . "functions.php";
-$products = json_to_arr(ROOT_PATH . DIRECTORY_SEPARATOR . "products.json");
-?>
-
-<?php if (!empty($_GET['error'])) : ?>
-    <h3>Login or password invalid</h3>
-<?php endif;
 
 // $users = [
 //     ["login" => "Test", "password" => "test", "email" => "test@test.com"],
@@ -17,27 +11,35 @@ $products = json_to_arr(ROOT_PATH . DIRECTORY_SEPARATOR . "products.json");
 //     ["login" => "Tyler", "password" => "555", "email" => "tyler@gmail.com"],
 //     ["login" => "Sedrick", "password" => "666", "email" => "sedrick@gmail.com"]
 // ];
-
 // file_put_contents("users.json", json_encode($users));
 
+header("Content-Type:application/json; charset=utf-8");
 
-if ((!empty($_POST['login'])) && (!empty($_POST['password']))) {
-    if (file_exists(ROOT_PATH . DIRECTORY_SEPARATOR . "users.json")) {
-        $users = file_get_contents(ROOT_PATH . DIRECTORY_SEPARATOR . "users.json");
-        $users = json_decode($users, true); // преобразуем джейсон строку в массив благодаря параметру тру
-        foreach ($users as $user) {
-            if ($user['login'] == $_POST['login'] && $user['password'] == $_POST['password']) {
-                $_SESSION['login'] = $user['login'];
-                if (!empty($_POST["remember"])) {
-                    $time = time();
-                    $cookie = $user['login'] . ":" . $time . ":" . generateSignature($user['login'], $time);
-                    setcookie("login", $cookie, time() + (10 * 365 * 24 * 60 * 60));
-                }
-                header("Location: http://www.mysite.loc/home.php");
-                die();
-            }
-        }
+$data = json_decode(file_get_contents("php://input"), true);
+$userFound = [];
+
+if ((!empty($data['login'])) && (!empty($data['login']))) {
+    $login = $data['login'];
+    $password = $data['password'];
+    $userFound = get_user($login, $password);
+
+    if (empty($userFound)) {
+        response(204, "Invalid login or password", NULL);
+    } else {
+        response(200, "Success", $userFound);
     }
-    header("Location: http://www.mysite.loc/login.php?error=1");
-    die();
+} else {
+    response(400, "Invalid Request", NULL);
+}
+
+function response($status, $message, $data)
+{
+    header("HTTP/1.1 " . $status);
+
+    $response['status'] = $status;
+    $response['message'] = $message;
+    $response['data'] = $data;
+
+    $jresponse = json_encode($response);
+    echo $jresponse;
 }

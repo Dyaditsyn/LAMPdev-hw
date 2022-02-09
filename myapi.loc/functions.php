@@ -9,8 +9,14 @@ function json_to_arr($path)
     return !empty($users) ? $users : "Error userss.json file opening";
 }
 
-function generateSignature($username, $time)
+function get_user($log, $pass)
 {
-    $salt = '13wrwerwe44';
-    return sha1($username . $time . $salt);
+    $users =  json_to_arr(ROOT_PATH . DIRECTORY_SEPARATOR . "users.json");
+
+    foreach ($users as $user) {
+        if (($user['login'] === $log) && ($user['password'] === $pass)) {
+            return $user;
+            break;
+        }
+    }
 }
