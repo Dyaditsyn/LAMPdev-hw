@@ -52,16 +52,18 @@ if ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign in")) {
     curl_close($ch);
 
     $resultArr = json_decode($result, true);
-    var_dump($resultArr);
-    echo "result <pre>";
-    print_r($resultArr);
-    echo "</pre>";
 
-    //     echo $resultArr['message'] . "<br>";
 
-    //     if ($resultArr['status'] === 200) {
-    //         echo "<pre>";
-    //         print_r($resultArr['data']);
-    //         echo "</pre>";
-    //     }
+
+    if ($resultArr['status'] === 200) {
+        echo $resultArr['message'] . "<br> You'll be redirected to login page in 10sec... <br>";
+        header("Refresh: 30; url=index.php");
+        echo "<pre>";
+        print_r($resultArr['data']);
+        echo "</pre>";
+    } else {
+        echo $resultArr['message'] . " <br> You'll be redirected back to registration page in 10sec...<br>";
+
+        header("Refresh: 30; url=reg.php");
+    }
 }
