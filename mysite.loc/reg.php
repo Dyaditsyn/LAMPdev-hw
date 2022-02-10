@@ -17,16 +17,12 @@ require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR
                 <input type="password" name="password" id="password" placeholder="password" required />
             </li>
             <li class="form-row">
-                <label for="re-password">Re-Enter a Password:</label>
-                <input type="password" name="re-password" id="re-password" placeholder="password" required />
+                <label for="repass">Re-Enter a Password:</label>
+                <input type="password" name="repass" id="repass" placeholder="password" required />
             </li>
             <li class="form-row">
                 <label for="email">Enter an Email:</label>
                 <input type="email" name="email" id="email" placeholder="email" required />
-            </li>
-            <li class="check">
-                <label for="remember">Remember me</label>
-                <input type="checkbox" name="remember" id="remember" />
             </li>
             <li class="form-row">
                 <input type="submit" name="submit" value="Sign up" />

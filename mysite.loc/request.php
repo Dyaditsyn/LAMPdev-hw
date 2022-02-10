@@ -14,14 +14,9 @@ if ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign in")) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     # Send request.
     $result = curl_exec($ch);
-    $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
     $resultArr = json_decode($result, true);
-
-    echo 'result: <pre>';
-    print_r($resultArr);
-    echo '</pre>';
 
     if ($resultArr['status'] === 200) {
         $_SESSION['user'] = $resultArr['data'];
@@ -36,26 +31,37 @@ if ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign in")) {
         header("Location: http://www.mysite.loc/index.php?error=1");
         die();
     }
-} 
+} elseif ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign up")) {
 
-// elseif ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign up")) {
+    $url = 'http://www.myapi.loc/reg.php';
+    $payload = json_encode([
+        "login" => $_POST['login'],
+        "password" => $_POST['password'],
+        "repass" => $_POST['repass'],
+        "email" => $_POST['email'],
+    ]);
 
-//     $payload = json_encode([
-//         "login" => $_POST['login'],
-//         "password" => $_POST['password'],
-//         "re-password" => $_POST['re-password'],
-//         "email" => $_POST['email'],
-//         "remember" => $_POST['remember']
-//     ]);
+    $ch = curl_init($url);
+    # Setup request to send json via POST.
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    # Return response instead of printing.
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    # Send request.
+    $result = curl_exec($ch);
+    curl_close($ch);
 
-//     $ch = curl_init();
-//     curl_setopt($ch, CURLOPT_URL, "'http://www.myapi.loc/create.php';");
-//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//     curl_setopt($ch, CURLOPT_POST, true);
-//     curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-//     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-//     $output = curl_exec($ch);
-//     curl_close($ch);
+    $resultArr = json_decode($result, true);
+    var_dump($resultArr);
+    echo "result <pre>";
+    print_r($resultArr);
+    echo "</pre>";
 
-//     echo "It came from REG page";
-// }
+    //     echo $resultArr['message'] . "<br>";
+
+    //     if ($resultArr['status'] === 200) {
+    //         echo "<pre>";
+    //         print_r($resultArr['data']);
+    //         echo "</pre>";
+    //     }
+}
