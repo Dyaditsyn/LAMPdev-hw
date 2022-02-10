@@ -6,7 +6,9 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 if ((!empty($data['login'])) && (!empty($data['password'])) &&  (!empty($data['repass'])) &&  (!empty($data['email']))) {
 
-    if ($data['password'] === $$data['repass']) {
+    if (check_user($data['login'])) {
+        response(204, "Login already in use", NULL);
+    } elseif ($data['password'] === $data['repass']) {
         $login = $data['login'];
         $password = $data['password'];
         $email = $data['email'];
@@ -14,8 +16,8 @@ if ((!empty($data['login'])) && (!empty($data['password'])) &&  (!empty($data['r
         $usersArr = add_user($user, ROOT_PATH . DIRECTORY_SEPARATOR . "users.json");
         write_user($usersArr, ROOT_PATH . DIRECTORY_SEPARATOR . "users.json");
         response(200, "Success", $user);
-    } else {
-        response(204, "Password not match", NULL);
+    } elseif ($data['password'] !== $data['repass']) {
+        response(204, "Password doesn't match", NULL);
     }
 } else {
     response(400, "Invalid Request", NULL);

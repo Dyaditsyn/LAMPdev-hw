@@ -21,10 +21,22 @@ function get_user($log, $pass)
     }
 }
 
+function check_user($log)
+{
+    $users =  json_to_arr(ROOT_PATH . DIRECTORY_SEPARATOR . "users.json");
+
+    foreach ($users as $user) {
+        if ($user['login'] === $log) {
+            return true;
+            break;
+        }
+    }
+}
+
 function response($status, $message, $data)
 {
     header("Content-Type:application/json; charset=utf-8");
-    header("HTTP/1.1 " . $status);
+    //header("HTTP/1.1 " . $status);
     $response = [];
     $response['status'] = $status;
     $response['message'] = $message;
