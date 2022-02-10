@@ -21,12 +21,24 @@ function get_user($log, $pass)
     }
 }
 
-function check_user($log)
+function check_login($log)
 {
     $users =  json_to_arr(ROOT_PATH . DIRECTORY_SEPARATOR . "users.json");
 
     foreach ($users as $user) {
         if ($user['login'] === $log) {
+            return true;
+            break;
+        }
+    }
+}
+
+function check_email($mail)
+{
+    $users =  json_to_arr(ROOT_PATH . DIRECTORY_SEPARATOR . "users.json");
+
+    foreach ($users as $user) {
+        if ($user['email'] === $mail) {
             return true;
             break;
         }

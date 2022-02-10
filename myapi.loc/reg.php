@@ -6,8 +6,10 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 if ((!empty($data['login'])) && (!empty($data['password'])) &&  (!empty($data['repass'])) &&  (!empty($data['email']))) {
 
-    if (check_user($data['login'])) {
+    if (check_login($data['login'])) {
         response(204, "Login already in use", NULL);
+    } elseif (check_email($data['email'])) {
+        response(204, "Email already in use", NULL);
     } elseif ($data['password'] === $data['repass']) {
         $login = $data['login'];
         $password = $data['password'];
