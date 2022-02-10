@@ -29,6 +29,7 @@ require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR
             </li>
         </ul>
     </form>
+    <p>Already registered? <a href="index.php">Sign in</a></p>
 </div>
 
 <?php
