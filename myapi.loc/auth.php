@@ -13,8 +13,6 @@ require ROOT_PATH . DIRECTORY_SEPARATOR . "functions.php";
 // ];
 // file_put_contents("users.json", json_encode($users));
 
-header("Content-Type:application/json; charset=utf-8");
-
 $data = json_decode(file_get_contents("php://input"), true);
 $userFound = [];
 
@@ -30,16 +28,4 @@ if ((!empty($data['login'])) && (!empty($data['login']))) {
     }
 } else {
     response(400, "Invalid Request", NULL);
-}
-
-function response($status, $message, $data)
-{
-    header("HTTP/1.1 " . $status);
-
-    $response['status'] = $status;
-    $response['message'] = $message;
-    $response['data'] = $data;
-
-    $jresponse = json_encode($response);
-    echo $jresponse;
 }
