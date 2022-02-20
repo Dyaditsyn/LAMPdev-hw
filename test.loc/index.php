@@ -549,66 +549,67 @@ declare(strict_types=1);
 //? API - Application Program Intreface
 // cURL
 
-// create curl resource
-$ch = curl_init();
+// // create curl resource
+// $ch = curl_init();
 
-// set url
-curl_setopt($ch, CURLOPT_URL, "http://dummy.restapiexample.com/api/v1/employees");
+// // set url
+// curl_setopt($ch, CURLOPT_URL, "http://dummy.restapiexample.com/api/v1/employees");
 
-//return the transfer as a string
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+// //return the transfer as a string
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-// $output contains the output string
-$output = curl_exec($ch);
+// // $output contains the output string
+// $output = curl_exec($ch);
 
-// close curl resource to free up system resources
-curl_close($ch);
-
-
-$employess = json_decode($output, true);
-$id = $employess['data'][count($employess['data']) - 1]['id'];
-var_dump($id);
-
-echo '<pre>';
-print_r($employess);
-echo '</pre>';
-//==============================================================
-$ch = curl_init();
-
-// set url
-curl_setopt($ch, CURLOPT_URL, "http://dummy.restapiexample.com/api/v1/employee/" . $id);
-
-//return the transfer as a string
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-// $output contains the output string
-$output = curl_exec($ch);
-
-// close curl resource to free up system resources
-curl_close($ch);
-
-echo '<pre>';
-print_r(json_decode($output, true));
-echo '</pre>';
+// // close curl resource to free up system resources
+// curl_close($ch);
 
 
-//=======================================================
-// создание нового работника
-// по умолчанию используется гет запрос а нам нужен пост
-$payload = json_encode(["name" => "test1", "salary" => "100000", "age" => 30]);
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "http://dummy.restapiexample.com/api/v1/create");
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-$output = curl_exec($ch);
-curl_close($ch);
+// $employess = json_decode($output, true);
+// $id = $employess['data'][count($employess['data']) - 1]['id'];
+// var_dump($id);
+
+// echo '<pre>';
+// print_r($employess);
+// echo '</pre>';
+// //==============================================================
+// $ch = curl_init();
+
+// // set url
+// curl_setopt($ch, CURLOPT_URL, "http://dummy.restapiexample.com/api/v1/employee/" . $id);
+
+// //return the transfer as a string
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+// // $output contains the output string
+// $output = curl_exec($ch);
+
+// // close curl resource to free up system resources
+// curl_close($ch);
+
+// echo '<pre>';
+// print_r(json_decode($output, true));
+// echo '</pre>';
 
 
-echo '<pre>';
-print_r(json_decode($output, true));
-echo '</pre>';
+// //=======================================================
+// // создание нового работника
+// // по умолчанию используется гет запрос а нам нужен пост
+// $payload = json_encode(["name" => "test1", "salary" => "100000", "age" => 30]);
+// $ch = curl_init();
+// curl_setopt($ch, CURLOPT_URL, "http://dummy.restapiexample.com/api/v1/create");
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+// curl_setopt($ch, CURLOPT_POST, true);
+// curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+// curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+// $output = curl_exec($ch);
+// curl_close($ch);
+
+echo "test";
+// echo '<pre>';
+// print_r(json_decode($output, true));
+// echo '</pre>';
+// 
 ?>
 
 
