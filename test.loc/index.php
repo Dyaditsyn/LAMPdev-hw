@@ -1,6 +1,11 @@
 <?php
 
 declare(strict_types=1);
+require_once "config.php";
+
+// phpinfo();
+// die();
+
 // phpinfo();
 // $a = 1;
 // $b = 2;
