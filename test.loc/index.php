@@ -3,6 +3,66 @@
 declare(strict_types=1);
 require_once "config.php";
 
+$login = "test' OR 1=1 -- habrahabra";
+$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); // только ассоциативный массив
+
+$stmt = $pdo->query("
+    SELECT
+        `user_id`,
+        `user_name`
+    FROM
+        `test`.`users` 
+    WHERE
+        `user_name` = '$login'
+");
+
+var_dump("
+SELECT
+    `user_id`,
+    `user_name`
+FROM
+    `test`.`users` 
+WHERE
+    `user_id` = '$login'
+");
+
+// $stmt = $pdo->query("
+//     SELECT
+//         `user_id`,
+//         `user_name`
+//     FROM
+//         `test`.`users` 
+//     ORDER BY
+//         `user_id` DESC 
+//         LIMIT 1
+// "); // statement -> navicat beautify sql
+
+$result = $stmt->fetchAll(); // возвращает многомерный массив
+//$result = $stmt->fetch(); // если возвращается одна запись - возвращает одномерный массив
+
+// поменять пароль пользователю с минимальным айдишником:
+// $result = $pdo->exec("
+//     UPDATE `test`.`users` 
+//     SET `password` = '222' 
+//     WHERE
+//         `user_id` = (
+//         SELECT
+//             `u`.`user_id` 
+//         FROM
+//             ( 
+//                 SELECT 
+//                     min( `user_id` ) AS user_id 
+//                 FROM 
+//                     `test`.`users` 
+//             ) 	AS u
+//         )
+// "); // возвращает 1 - значит количество измененных записей (тот мин айди его пароль)
+
+echo "<pre>";
+print_r($result);
+echo "</pre>";
+die();
+
 // phpinfo();
 // die();
 
