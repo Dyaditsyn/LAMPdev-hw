@@ -1,5 +1,6 @@
 <?php
 define("ROOT_PATH", dirname(__FILE__));
+define("FUNCTION_PATH", ROOT_PATH . DIRECTORY_SEPARATOR . "functions" . DIRECTORY_SEPARATOR);
 define("DB_NAME", "test");
 define("DB_USER", "phpmyadmin");
 define("DB_PASSWORD", "1111");

@@ -1,9 +1,10 @@
 <?php
 
 require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "config.php";
+require_once FUNCTION_PATH . "db.php";
 
 $products = [];
-$allProducts =  json_decode(file_get_contents(ROOT_PATH . DIRECTORY_SEPARATOR . "shop" . DIRECTORY_SEPARATOR . "products.json"), true);
+$allProducts = getAllProducts($pdo, 1, 100);
 
 $_SESSION['products'] =  $_SESSION['products'] ?? [];
 foreach ($allProducts as $product) {
