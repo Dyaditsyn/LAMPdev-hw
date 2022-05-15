@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "config.php";
 
 if (!isset($_SESSION['user'])) {
-    header("Location: http://www.usersdb.loc/index.php?error=1");
+    header("Location: /index.php?error=1");
     die();
 }
 

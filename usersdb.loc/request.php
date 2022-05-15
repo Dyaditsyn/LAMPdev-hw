@@ -16,10 +16,10 @@ if ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign in")) {
             $cookie = $login . ":" . $time . ":" . generateSignature($login, $time);
             setcookie("login", $cookie, time() + (10 * 365 * 24 * 60 * 60));
         }
-        header("Location: http://www.usersdb.loc/home.php");
+        header("Location: /home.php");
         die();
     } else {
-        header("Location: http://www.usersdb.loc/index.php?error=1");
+        header("Location: /index.php?error=1");
         die();
     }
 } elseif ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign up")) {
@@ -37,10 +37,10 @@ if ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign in")) {
     } else {
         $result = addUser($pdo, $name, $login, $password, $email);
         echo "Success" . "<br> You'll be redirected to the login page in few sec...";
-        header("Refresh: 10; url=index.php");
+        header("Refresh: 10; url=/index.php");
         die();
     }
 
     echo "You'll be redirected back to registration page in few sec...";
-    header("Refresh: 10; url=reg.php");
+    header("Refresh: 10; url=/reg.php");
 }
