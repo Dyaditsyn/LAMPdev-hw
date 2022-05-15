@@ -6,6 +6,7 @@ define("DB_USER", "phpmyadmin");
 define("DB_PASSWORD", "1111");
 
 require_once FUNCTION_PATH . "functions.php";
+require_once FUNCTION_PATH . "db.php";
 
 $dsn = "mysql:host=localhost;port3306;dbname=" . DB_NAME . ";charset=utf8";
 

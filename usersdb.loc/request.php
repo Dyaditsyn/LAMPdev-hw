@@ -1,29 +1,16 @@
 <?php
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "config.php";
+
 $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
 if ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign in")) {
 
     $login = $_POST['login'];
     $pass = $_POST['password'];
-    $stmt = $pdo->prepare(
-        "
-    SELECT
-        `id`,
-        `name`
-    FROM
-        `shop`.`users` 
-    WHERE
-        `login` = :login and `password` = :password
-    "
-    );
+    $userFound = getUserByLoginAndPass($pdo, $login, $pass);
 
-    $stmt->execute(["login" => $login, "password" => $pass]);
-
-    $result = $stmt->fetch();
-
-    if (!empty($result)) {
-        $_SESSION['user'] = $result;
+    if (!empty($userFound)) {
+        $_SESSION['user'] = $userFound;
         if (!empty($_POST["remember"])) {
             $time = time();
             $cookie = $login . ":" . $time . ":" . generateSignature($login, $time);
@@ -42,42 +29,13 @@ if ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign in")) {
     $repass = $_POST['repass'];
     $email = $_POST['email'];
 
-    $stmt = $pdo->prepare(
-        "
-    SELECT
-        `email`
-    FROM
-        `shop`.`users` 
-        WHERE 
-        `email` = :email
-    "
-    );
-    $stmt->execute(["email" => $email]);
-    $result = $stmt->fetch();
-
+    $emailFound = getUserEmail($pdo, $email);
     if ($password !== $repass) {
         echo "Password Doesn't match.<br>";
-    } elseif (!!$result) {
+    } elseif (!!$emailFound) {
         echo "Email already exist in database.<br>";
     } else {
-        $stmt = $pdo->prepare(
-            "
-            INSERT INTO `shop`.`users` ( 
-                `name`, 
-                `login`, 
-                `password`, 
-                `email` 
-            )
-            VALUES
-                (
-                    :name,
-                    :login,
-                    :password,
-                    :email
-                )"
-        );
-        $stmt->execute(["name" => $name, "login" => $login, "password" => $password, "email" => $email]);
-        $result = $stmt->fetchAll();
+        $result = addUser($pdo, $name, $login, $password, $email);
         echo "Success" . "<br> You'll be redirected to the login page in few sec...";
         header("Refresh: 10; url=index.php");
         die();
