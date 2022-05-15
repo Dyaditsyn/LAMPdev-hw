@@ -1,11 +1,11 @@
 <?php
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "config.php";
+$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
 if ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign in")) {
 
     $login = $_POST['login'];
     $pass = $_POST['password'];
-    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $stmt = $pdo->prepare(
         "
     SELECT
@@ -35,28 +35,54 @@ if ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign in")) {
         header("Location: http://www.usersdb.loc/index.php?error=1");
         die();
     }
+} elseif ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign up")) {
+    $name = $_POST['name'];
+    $login = $_POST['login'];
+    $password = $_POST['password'];
+    $repass = $_POST['repass'];
+    $email = $_POST['email'];
+
+    $stmt = $pdo->prepare(
+        "
+    SELECT
+        `email`
+    FROM
+        `shop`.`users` 
+        WHERE 
+        `email` = :email
+    "
+    );
+    $stmt->execute(["email" => $email]);
+    $result = $stmt->fetch();
+
+    if ($password !== $repass) {
+        echo "Password Doesn't match.<br>";
+    } elseif (!!$result) {
+        echo "Email already exist in database.<br>";
+    } else {
+        $stmt = $pdo->prepare(
+            "
+            INSERT INTO `shop`.`users` ( 
+                `name`, 
+                `login`, 
+                `password`, 
+                `email` 
+            )
+            VALUES
+                (
+                    :name,
+                    :login,
+                    :password,
+                    :email
+                )"
+        );
+        $stmt->execute(["name" => $name, "login" => $login, "password" => $password, "email" => $email]);
+        $result = $stmt->fetchAll();
+        echo "Success" . "<br> You'll be redirected to the login page in few sec...";
+        header("Refresh: 10; url=index.php");
+        die();
+    }
+
+    echo "You'll be redirected back to registration page in few sec...";
+    header("Refresh: 10; url=reg.php");
 }
-
-// elseif ((isset($_POST['submit'])) && ($_POST['submit'] === "Sign up")) {
-
-//     $url = 'http://www.myapi.loc/reg.php';
-//     $payload = json_encode([
-//         "login" => $_POST['login'],
-//         "password" => $_POST['password'],
-//         "repass" => $_POST['repass'],
-//         "email" => $_POST['email'],
-//     ]);
-
-
-//     if ($resultArr['status'] === 200) {
-//         echo $resultArr['message'] . "<br> You'll be redirected to login page in 10sec... <br>";
-//         header("Refresh: 30; url=index.php");
-//         echo "<pre>";
-//         print_r($resultArr['data']);
-//         echo "</pre>";
-//     } else {
-//         echo $resultArr['message'] . " <br> You'll be redirected back to registration page in 10sec...<br>";
-
-//         header("Refresh: 30; url=reg.php");
-//     }
-// }
