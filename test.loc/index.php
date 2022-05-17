@@ -6,7 +6,7 @@ require_once CLASSES_PATH . "User.php";
 // echo "test";
 
 //! PHP CLASSES
-//dec2 lecture
+
 $user1 = new User("Test", "test@test.com", "1111", 1);
 // var_dump($user1);
 // $user1->id = 1;

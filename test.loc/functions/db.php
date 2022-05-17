@@ -1,5 +1,5 @@
 <?php
-// work with db lecture dec2
+
 function getCategoryIdByName(object $connection, string $name): string
 {
     $stmt = $connection->prepare("

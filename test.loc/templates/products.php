@@ -1,7 +1,7 @@
 <?php
 require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . "partials" . DIRECTORY_SEPARATOR . "header.php";
 ?>
-// dec2 lecture
+
 <div class="main_page">
     <form method="post" action="/shop/index.php">
         <table border="1">
