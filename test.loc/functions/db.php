@@ -70,4 +70,63 @@ function createCart(object $connection, int $userId): int
 
 function addProductToCart(object $connection, int $cartId, int $productId, int $quantity = 1): int
 {
+    $stmt = $connection->prepare(
+        "
+    INSERT INTO `test`.`cart_products` (
+        `cart_id`,
+        `product_id`,
+        `quantity`,
+        `order_date`
+    )
+    VALUES
+        (
+            :cart_id,
+            :product_id,
+            :quantity,
+            DATE(NOW())
+        )"
+    );
+    return $stmt->execute(
+        [
+            "cart_id" => $cartId,
+            "product_id" => $productId,
+            "quantity" => $quantity
+        ]
+    );
+}
+
+function clearCart(object $connection, int $cartId): int
+{
+    $stmt = $connection->prepare(
+        "
+    DELETE FROM
+        `test`.`cart_products` 
+    WHERE
+        cart_id = :cart_id"
+    );
+    return $stmt->execute(
+        [
+            "cart_id" => $cartId,
+        ]
+    );
+}
+
+function getCartProducts(object $connection, int $cartId, int $page, int $perPage = 10)
+{
+    $connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $stmt = $connection->prepare("
+        SELECT
+            products.* 
+        FROM
+            test.products
+        INNER JOIN test.cart_products ON cart_products.product_id = products.id 
+        WHERE
+            test.cart_products.cart_id = :cart_id   
+        LIMIT " . $perPage . " OFFSET " . ($page - 1) * $perPage);
+    $stmt->execute(
+        [
+            "cart_id" => $cartId,
+        ]
+    );
+    return $stmt->fetchAll();
 }

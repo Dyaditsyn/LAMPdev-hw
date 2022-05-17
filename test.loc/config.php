@@ -1,6 +1,7 @@
 <?php
 define("ROOT_PATH", dirname(__FILE__));
 define("FUNCTION_PATH", ROOT_PATH . DIRECTORY_SEPARATOR . "functions" . DIRECTORY_SEPARATOR);
+define("CLASSES_PATH", ROOT_PATH . DIRECTORY_SEPARATOR . "classes" . DIRECTORY_SEPARATOR);
 define("DB_NAME", "test");
 define("DB_USER", "phpmyadmin");
 define("DB_PASSWORD", "1111");
@@ -12,7 +13,7 @@ try {
         $dsn,
         DB_USER,
         DB_PASSWORD,
-        //array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+        array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
     );
     json_encode(array('outcome' => true));
 } catch (PDOException $ex) {

@@ -18,10 +18,16 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // file_put_contents(__DIR__ . DIRECTORY_SEPARATOR . 'products.json', json_encode($products));
 
 $products = getAllProducts($pdo, 1, 100);
+
 if (!empty($_POST['products'])) {
-    $_SESSION['cart_id'] = createCart($pdo, $_SESSION['user_id']);
-    foreach ($_POST['products'] as $products) {
-        addProductToCart($pdo, $_SESSION['cart_id'], $product);
+    if (!empty($_SESSION['cart_id'])) {
+        clearCart($pdo, $_SESSION['cart_id']);
+    } else {
+        $_SESSION['cart_id'] = createCart($pdo, $_SESSION['user_id']);
+    }
+
+    foreach ($_POST['products'] as $product) {
+        addProductToCart($pdo, $_SESSION['cart_id'], (int) $product);
     }
     $_SESSION['products'] = $_POST['products'];
     header("location: /shop/cart.php");

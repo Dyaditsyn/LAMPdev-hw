@@ -2,29 +2,55 @@
 
 declare(strict_types=1);
 require_once "config.php";
+require_once CLASSES_PATH . "User.php";
+// echo "test";
 
-$login = "test' OR 1=1 -- habrahabra";
-$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); // только ассоциативный массив
+//! PHP CLASSES
 
-$stmt = $pdo->query("
-    SELECT
-        `user_id`,
-        `user_name`
-    FROM
-        `test`.`users` 
-    WHERE
-        `user_name` = '$login'
-");
+$user1 = new User("Test", "test@test.com", "1111", 1);
+// var_dump($user1);
+// $user1->id = 1;
+// $user1->name = "Test";
+// $user1->email = "test@test.com";
+// $user1->setPassword("1111");
 
-var_dump("
-SELECT
-    `user_id`,
-    `user_name`
-FROM
-    `test`.`users` 
-WHERE
-    `user_id` = '$login'
-");
+// $isChanged = $user1->changePassword("1111", "2222");
+// echo ($isChanged ? "password was changed to " . $user1->getPassword() : "password was incorrect");
+//var_dump($user1);
+// $id = $user1->login("test@test.com", "1111");
+// echo ($id ? "you were logged id: " . $id  : "password or email was incorrect");
+
+var_dump($user1);
+$userId = $user1->register($pdo);
+var_dump($user1);
+
+
+
+
+
+//! DB REQUESTS FROM PHP INJECTIONS
+// $login = "test' OR 1=1 -- habrahabra";
+// $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); // только ассоциативный массив
+
+// $stmt = $pdo->query("
+//     SELECT
+//         `user_id`,
+//         `user_name`
+//     FROM
+//         `test`.`users` 
+//     WHERE
+//         `user_name` = '$login'
+// ");
+
+// var_dump("
+// SELECT
+//     `user_id`,
+//     `user_name`
+// FROM
+//     `test`.`users` 
+// WHERE
+//     `user_id` = '$login'
+// ");
 
 // $stmt = $pdo->query("
 //     SELECT
@@ -37,7 +63,7 @@ WHERE
 //         LIMIT 1
 // "); // statement -> navicat beautify sql
 
-$result = $stmt->fetchAll(); // возвращает многомерный массив
+//$result = $stmt->fetchAll(); // возвращает многомерный массив
 //$result = $stmt->fetch(); // если возвращается одна запись - возвращает одномерный массив
 
 // поменять пароль пользователю с минимальным айдишником:
@@ -58,10 +84,10 @@ $result = $stmt->fetchAll(); // возвращает многомерный ма
 //         )
 // "); // возвращает 1 - значит количество измененных записей (тот мин айди его пароль)
 
-echo "<pre>";
-print_r($result);
-echo "</pre>";
-die();
+// echo "<pre>";
+// print_r($result);
+// echo "</pre>";
+// die();
 
 // phpinfo();
 // die();
@@ -670,7 +696,7 @@ die();
 // $output = curl_exec($ch);
 // curl_close($ch);
 
-echo "test";
+
 // echo '<pre>';
 // print_r(json_decode($output, true));
 // echo '</pre>';

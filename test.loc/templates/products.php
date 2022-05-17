@@ -18,7 +18,7 @@ require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR
                     <td><?php echo $product['price']; ?></td>
                     <td><?php echo $product['quantity']; ?></td>
                     <td>
-                        <input type="checkbox" name="products[]" value="<?php echo $product['name']; ?>" />
+                        <input type="checkbox" name="products[]" value="<?php echo $product['id']; ?>" />
                     </td>
                 </tr>
             <?php endforeach; ?>
