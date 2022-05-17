@@ -20,5 +20,5 @@ try {
     json_encode(array('outcome' => false, 'message' => 'Unable to connect'));
 }
 //$pdo = new PDO($dsn, DB_USER, DB_PASSWORD);
-
+// dec2 lecture
 session_start(); // прописать в конфиге чтоб хранились сеансы пользователей
