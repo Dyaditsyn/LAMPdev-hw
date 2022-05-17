@@ -1,5 +1,5 @@
 <?php
-
+//lecture dec2
 require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "config.php";
 require_once FUNCTION_PATH . "db.php";
 
