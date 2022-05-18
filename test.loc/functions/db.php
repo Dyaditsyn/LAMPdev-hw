@@ -116,7 +116,7 @@ function getCartProducts(object $connection, int $cartId, int $page, int $perPag
     $connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $stmt = $connection->prepare("
         SELECT
-            products.* 
+            products.*, cart_products.quantity as selected_qty
         FROM
             test.products
         INNER JOIN test.cart_products ON cart_products.product_id = products.id 

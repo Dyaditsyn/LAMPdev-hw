@@ -13,3 +13,5 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`id`),
   KEY  `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `products` ADD COLUMN `image` VARCHAR(255) DEFAULT NULL;

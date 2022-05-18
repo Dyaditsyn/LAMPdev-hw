@@ -28,7 +28,8 @@ if (!empty($_POST['products'])) {
     }
 
     foreach ($_POST['products'] as $product) {
-        addProductToCart($pdo, $_SESSION['cart_id'], (int) $product);
+        $quantity = $_POST['quantity_' . $product];
+        addProductToCart($pdo, $_SESSION['cart_id'], (int) $product, (int) $quantity);
     }
     $_SESSION['products'] = $_POST['products'];
     header("location: /shop/cart.php");
