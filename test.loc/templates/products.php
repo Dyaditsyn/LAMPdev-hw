@@ -36,7 +36,7 @@ require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR
                                     <div class="d-flex justify-content-between align-items-center">
                                         BUY?<input type="checkbox" name="products[]" value="<?php echo $product['id']; ?>" />
                                         <input type="number" id="quantity" name="quantity_<?php echo $product['id']; ?>" min="1" max="<?php echo $product['quantity']; ?>">
-                                        <small class="text-muted">$<?php echo $product['price']; ?></small>
+                                        <small class="text-muted">$<?php echo number_format($product['price'], 2, '.', ','); ?></small>
                                     </div>
                                 </div>
                             </div>

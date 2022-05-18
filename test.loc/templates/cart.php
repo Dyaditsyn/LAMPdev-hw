@@ -34,13 +34,24 @@ require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                     </div>
-                                    <small class="text-muted">$<?php echo $product['price']; ?></small>
+                                    <small class="text-muted">$<?php echo number_format($product['price'], 2, '.', ','); ?></small>
                                 </div>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    Total:
+                </div>
+                <div class="col-md-6 text-right">
+                    <b>$<?php echo $totalPrice; ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 

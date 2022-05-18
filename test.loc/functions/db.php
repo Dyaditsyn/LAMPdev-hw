@@ -130,3 +130,24 @@ function getCartProducts(object $connection, int $cartId, int $page, int $perPag
     );
     return $stmt->fetchAll();
 }
+
+function calcTotalProductPrice(object $connection, int $cartId)
+{
+    $connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_COLUMN);
+    $stmt = $connection->prepare(
+        "
+        SELECT
+            sum(products.price * cart_products.quantity)
+        FROM
+            test.products
+        INNER JOIN test.cart_products ON cart_products.product_id = products.id 
+        WHERE
+            test.cart_products.cart_id = :cart_id"
+    );
+    $stmt->execute(
+        [
+            "cart_id" => $cartId,
+        ]
+    );
+    return $stmt->fetch();
+}
