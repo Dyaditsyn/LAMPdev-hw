@@ -3,11 +3,20 @@
 declare(strict_types=1);
 require_once "config.php";
 require_once CLASSES_PATH . "User.php";
+require_once CLASSES_PATH . "Admin.php";
 // echo "test";
 
 //! PHP CLASSES
 
-$user1 = new User("Test", "test@test.com", "1111", 1);
+$user1 = new User("Test", "test@test.com", "1111", 34);
+$admin = new Admin("Test", "admin@test.com", "2222", 35);
+
+$admin->block($user1, $pdo);
+$admin->block($admin, $pdo);
+// var_dump($admin);
+//$user1->register($pdo);
+//$admin->register($pdo);
+//$admin->register($pdo);
 // var_dump($user1);
 // $user1->id = 1;
 // $user1->name = "Test";
@@ -20,13 +29,19 @@ $user1 = new User("Test", "test@test.com", "1111", 1);
 // $id = $user1->login("test@test.com", "1111");
 // echo ($id ? "you were logged id: " . $id  : "password or email was incorrect");
 
-var_dump($user1);
-$userId = $user1->register($pdo);
-var_dump($user1);
+// $userId = $user1->register($pdo);
 
+$user1->setEmail("1@1.c");
+// var_dump($user1->getEmail());
 
+$user1->cardnumber = "123456";
+// var_dump($user1->cardnumber);
 
-
+// $str = serialize($user1);
+// var_dump($str);
+// var_dump(unserialize($str));
+// echo $user1;
+require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . "main.php";
 
 //! DB REQUESTS FROM PHP INJECTIONS
 // $login = "test' OR 1=1 -- habrahabra";
