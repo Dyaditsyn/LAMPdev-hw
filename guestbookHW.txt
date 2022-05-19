@@ -1,0 +1,7 @@
+GuestBook user:
+Properties - id, name, email, password, privelege, reg_time, messages_count
+Methods - Register user, Login user, Delete user, Change password
+
+Comment:
+Properties - id, author_id, content, publish_date, last_updated 
+Methods - Create comment, Update comment, Delete comment
