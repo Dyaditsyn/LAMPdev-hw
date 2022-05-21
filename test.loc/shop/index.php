@@ -2,6 +2,7 @@
 
 require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "config.php";
 require_once FUNCTION_PATH . "db.php";
+require_once CLASSES_PATH . "Cart.php";
 
 require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . "partials" . DIRECTORY_SEPARATOR . "header.php";
 
@@ -21,17 +22,20 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $products = getAllProducts($pdo, 1, 100);
 
 if (!empty($_POST['products'])) {
+    $cart = new Cart($_SESSION['user_id']);
     if (!empty($_SESSION['cart_id'])) {
-        clearCart($pdo, $_SESSION['cart_id']);
+        $cart->clearCart($pdo, $_SESSION['cart_id']);
     } else {
-        $_SESSION['cart_id'] = createCart($pdo, $_SESSION['user_id']);
+        $_SESSION['cart_id'] = $cart->createCart($pdo, $_SESSION['user_id']);
     }
 
     foreach ($_POST['products'] as $product) {
         $quantity = $_POST['quantity_' . $product];
-        addProductToCart($pdo, $_SESSION['cart_id'], (int) $product, (int) $quantity);
+        $cart->addProductToCart($pdo, $_SESSION['cart_id'], (int) $product, (int) $quantity);
     }
+
     $_SESSION['products'] = $_POST['products'];
+    $_SESSION['cart'] = serialize($cart);
     header("location: /shop/cart.php");
     die();
 }
