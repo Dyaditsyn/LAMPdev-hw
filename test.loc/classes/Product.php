@@ -88,4 +88,11 @@ class Product
             ]
         );
     }
+
+    public function getAllProducts(object $connection, int $page, int $perPage = 2): array
+    {
+        $connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $stmt = $connection->query("SELECT * FROM test.products LIMIT " . $perPage . " OFFSET " . ($page - 1) * $perPage);
+        return $stmt->fetchAll();
+    }
 }

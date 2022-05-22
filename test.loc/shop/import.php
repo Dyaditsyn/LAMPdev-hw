@@ -10,8 +10,10 @@ $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_COLUMN);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 foreach ($products as $product) {
     $categoryId = getCategoryIdByName($pdo, $product['category']);
-    $product = new Product($categoryId, $product['name'], $product['price'], $product['quantity']);
-    $product->addProduct($pdo, $product['name'], $product['price'], $product['quantity'], $categoryId);
+    $newProduct = new Product($categoryId, $product['name'], $product['price'], $product['quantity']);
+    $newProduct->addProduct($pdo, $product['name'], $product['price'], $product['quantity'], $categoryId);
 }
+
+$_SESSION['newProduct'] = serialize($newProduct);
 
 //require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . "products.php";

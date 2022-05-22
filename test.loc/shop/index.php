@@ -3,6 +3,7 @@
 require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "config.php";
 require_once FUNCTION_PATH . "db.php";
 require_once CLASSES_PATH . "Cart.php";
+require_once CLASSES_PATH . "Product.php";
 
 require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . "partials" . DIRECTORY_SEPARATOR . "header.php";
 
@@ -18,11 +19,12 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // ];
 // file_put_contents(__DIR__ . DIRECTORY_SEPARATOR . 'products.json', json_encode($products));
 
+$newProduct = unserialize($_SESSION['newProduct']);
+$products = $newProduct->getAllProducts($pdo, 1, 100);
 
-$products = getAllProducts($pdo, 1, 100);
-
+$cart = new Cart($_SESSION['user_id']);
 if (!empty($_POST['products'])) {
-    $cart = new Cart($_SESSION['user_id']);
+
     if (!empty($_SESSION['cart_id'])) {
         $cart->clearCart($pdo, $_SESSION['cart_id']);
     } else {
