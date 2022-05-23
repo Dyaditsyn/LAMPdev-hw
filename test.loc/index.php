@@ -2,17 +2,29 @@
 
 declare(strict_types=1);
 require_once "config.php";
+require_once CLASSES_PATH . "AbstractUser.php";
+require_once CLASSES_PATH . "Interfaces" . DIRECTORY_SEPARATOR . "ChangePassword.php";
+require_once CLASSES_PATH . "Interfaces" . DIRECTORY_SEPARATOR . "Block.php";
 require_once CLASSES_PATH . "User.php";
 require_once CLASSES_PATH . "Admin.php";
-// echo "test";
 
+// echo "test";
 //! PHP CLASSES
 
-$user1 = new User("Test", "test@test.com", "1111", 34);
-$admin = new Admin("Test", "admin@test.com", "2222", 35);
+// $user1 = new User("Test", "test@test.com", "1111", 34);
+// $user1 = User::register($pdo, "Test23", "test23@test.com", "1111");
+// var_dump($user1);
+// $admin = new Admin("Test", "admin@test.com", "2222", 35);
+// $admin = Admin::register($pdo, "Admin12", "admint12@test.com", "1111");
+// var_dump($admin);
 
-$admin->block($user1, $pdo);
-$admin->block($admin, $pdo);
+var_dump(User::login($pdo, "test23@test.com", "11112"));
+
+
+
+
+// $admin->block($user1, $pdo);
+// $admin->block($admin, $pdo);
 // var_dump($admin);
 //$user1->register($pdo);
 //$admin->register($pdo);
@@ -31,10 +43,10 @@ $admin->block($admin, $pdo);
 
 // $userId = $user1->register($pdo);
 
-$user1->setEmail("1@1.c");
+// $user1->setEmail("1@1.c");
 // var_dump($user1->getEmail());
 
-$user1->cardnumber = "123456";
+// $user1->cardnumber = "123456";
 // var_dump($user1->cardnumber);
 
 // $str = serialize($user1);

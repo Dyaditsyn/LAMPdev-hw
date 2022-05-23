@@ -1,20 +1,20 @@
 <?php
 
 
-class Admin extends User
+class Admin extends User implements ChangePassword, Block
 {
 
     protected const TYPE = 'admin';
 
-    public function __construct(string $name, string $email, string $password, int $id = null)
+    public function __construct(int $id, string $name, string $email, string $password)
     {
-        parent::__construct($name, $email, $password, $id);
+        parent::__construct($id, $name, $email, $password);
         $this->name = "Admin " . $name;
     }
 
-    public function register(object $db, $type = self::TYPE): int
+    public static function register(object $db, string $name, string $email, string $password, $type = self::TYPE): User
     {
-        return parent::register($db, $type);
+        return parent::register($db, $name, $email, $password, $type);
     }
 
     public function block(User $user, object $db): void
@@ -38,5 +38,9 @@ class Admin extends User
             ]
         );
         $user->changeStatus('not active');
+    }
+
+    protected function delete(): void
+    {
     }
 }

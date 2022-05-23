@@ -1,19 +1,15 @@
 <?php
 
 
-class User
+class User extends AbstractUser implements ChangePassword
 {
-    public $id;
-    public $name;
-    public $email;
-    protected $password;
-    private $salt = 'ccfo58d3311s$';
     private $cardnumber;
     private $status = 'active';
     protected const TYPE = 'user';
     private $properties = ["id", "name", "email"];
+    private const SALT = 'ccfo58d3311s$';
 
-    public function __construct(string $name, string $email, string $password, int $id = null)
+    public function __construct(int $id, string $name, string $email, string $password)
     {
         if (!empty($id)) {
             $this->id = $id;
@@ -31,12 +27,12 @@ class User
 
     public function setPassword(string $password)
     {
-        $this->password = $this->encryptPass($password);
+        $this->password = self::encryptPass($password);
     }
 
-    private function encryptPass(string $password): string
+    private static function encryptPass(string $password): string
     {
-        return  sha1($password . $this->salt);
+        return  sha1($password . self::SALT);
     }
 
     public function getPassword(): string
@@ -46,22 +42,38 @@ class User
 
     public function changePassword(string $oldPassword, string $newPassword): bool
     {
-        if ($this->encryptPass($oldPassword) === $this->password) {
-            $this->password = $this->encryptPass($newPassword);
+        if (self::encryptPass($oldPassword) === $this->password) {
+            $this->password = self::encryptPass($newPassword);
+            // sending email
+            // self::sendEmail();
             return true;
         }
         return false;
     }
 
-    public function login(string $email, string $password): int
+    public static function login(object $db, string $email, string $password): array
     {
-        if ($email === $this->email && $this->encryptPass($password) === $this->password) {
-            return $this->id;
-        }
-        return 0;
+        $stmt = $db->prepare(
+            "
+            SELECT 
+                *
+            FROM
+                `test`.`users` 
+            WHERE
+                `email` = :email 
+                AND `password` = :password"
+        );
+        $stmt->execute(
+            [
+                "email" => $email,
+                "password" => self::encryptPass($password),
+            ]
+        );
+
+        return (!empty($stmt->fetch()) ? $stmt->fetch() : []);
     }
 
-    public function register(object $db, $type = self::TYPE): int
+    public static function register(object $db, string $name, string $email, string $password, $type = self::TYPE): User
     {
         $stmt = $db->prepare(
             "
@@ -81,14 +93,14 @@ class User
         );
         $stmt->execute(
             [
-                "name" => $this->name,
-                "email" => $this->email,
-                "password" => $this->password,
+                "name" => $name,
+                "email" => $email,
+                "password" => self::encryptPass($password),
                 "type" => $type,
             ]
         );
-        $this->id = $db->lastInsertId();
-        return $this->id;
+        $id = $db->lastInsertId();
+        return new User($id, $name, $email, $password);
     }
 
     public function __call($name, $arguments)
