@@ -9,20 +9,21 @@ class User extends AbstractUser implements ChangePassword
     private $properties = ["id", "name", "email"];
     private const SALT = 'ccfo58d3311s$';
 
-    public function __construct(int $id, string $name, string $email, string $password)
+    public function __construct(int $id, string $name, string $email, string $password = null)
     {
         if (!empty($id)) {
             $this->id = $id;
         }
         $this->name = $name;
         $this->email = $email;
-        $this->setPassword($password);
+        if (isset($password)) {
+            $this->setPassword($password);
+        }
     }
 
     public function __destruct()
     {
         // TODO: Implement __destruct() method.
-        echo "Object is removed";
     }
 
     public function setPassword(string $password)
@@ -69,8 +70,8 @@ class User extends AbstractUser implements ChangePassword
                 "password" => self::encryptPass($password),
             ]
         );
-
-        return (!empty($stmt->fetch()) ? $stmt->fetch() : []);
+        $user = $stmt->fetch();
+        return (!empty($user) ? $user : []);
     }
 
     public static function register(object $db, string $name, string $email, string $password, $type = self::TYPE): User
@@ -151,5 +152,30 @@ class User extends AbstractUser implements ChangePassword
     protected function changeStatus(string $status): void
     {
         $this->status = $status;
+    }
+
+    public static function getUserByEmail(object $db, string $email)
+    {
+        $stmt = $db->prepare(
+            "
+            SELECT 
+                *
+            FROM
+                `test`.`users` 
+            WHERE
+                `email` = :email"
+        );
+        $stmt->execute(
+            [
+                "email" => $email,
+            ]
+        );
+        $res = $stmt->fetch();
+        if (empty($res)) {
+            return false;
+        }
+        $user = new User($res['user_id'], $res['user_name'], $res['email']);
+        $user->password = $res['password'];
+        return $user;
     }
 }

@@ -4,10 +4,13 @@ require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "config.php";
 require_once FUNCTION_PATH . "db.php";
 require_once CLASSES_PATH . "Cart.php";
 require_once CLASSES_PATH . "Product.php";
+require_once CLASSES_PATH . "CartProduct.php";
 
-require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . "partials" . DIRECTORY_SEPARATOR . "header.php";
+if (empty($_SESSION['user_id'])) {
+    header("Location: /shop/login.php");
+    die();
+}
 
-$_SESSION['user_id'] = 1;
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // $products = [
 //     ['name' => 'Apple iPhone 11 Pro Max', 'price' => 47999, 'quantity' => 15, 'category' => "Apple"],
@@ -19,8 +22,11 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // ];
 // file_put_contents(__DIR__ . DIRECTORY_SEPARATOR . 'products.json', json_encode($products));
 
-$newProduct = unserialize($_SESSION['newProduct']);
-$products = $newProduct->getAllProducts($pdo, 1, 100);
+//$newProduct = unserialize($_SESSION['newProduct']);
+$products = Product::getAll($pdo);
+
+$cartProduct = new CartProduct(36, 1299, 14, 3, "Xiaomi Mi Smart Band 4 NFC", 1, "2020-12-12");
+var_dump($cartProduct);
 
 $cart = new Cart($_SESSION['user_id']);
 if (!empty($_POST['products'])) {
