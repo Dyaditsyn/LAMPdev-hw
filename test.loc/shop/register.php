@@ -39,7 +39,7 @@ if (!empty($_POST)) {
     }
 
     if (empty($error)) {
-        $user = User::register($pdo, $_POST['name'],  $_POST['email'], $_POST['password']);
+        $user = User::register($_POST['name'],  $_POST['email'], $_POST['password']);
         if (!empty($user)) {
             $_SESSION['user_id'] = $user->id;
             header("Location: /shop/index.php");

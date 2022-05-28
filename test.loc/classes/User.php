@@ -52,9 +52,9 @@ class User extends AbstractUser implements ChangePassword
         return false;
     }
 
-    public static function login(object $db, string $email, string $password): array
+    public static function login(string $email, string $password): array
     {
-        $stmt = $db->prepare(
+        $stmt = Db::getInstance()->prepare(
             "
             SELECT 
                 *
@@ -74,9 +74,9 @@ class User extends AbstractUser implements ChangePassword
         return (!empty($user) ? $user : []);
     }
 
-    public static function register(object $db, string $name, string $email, string $password, $type = self::TYPE): User
+    public static function register(string $name, string $email, string $password, $type = self::TYPE): User
     {
-        $stmt = $db->prepare(
+        $stmt = Db::getInstance()->prepare(
             "
         INSERT INTO `test`.`users` (
             `user_name`,
@@ -100,7 +100,7 @@ class User extends AbstractUser implements ChangePassword
                 "type" => $type,
             ]
         );
-        $id = $db->lastInsertId();
+        $id = Db::getInstance()->lastInsertId();
         return new User($id, $name, $email, $password);
     }
 
@@ -154,9 +154,9 @@ class User extends AbstractUser implements ChangePassword
         $this->status = $status;
     }
 
-    public static function getUserByEmail(object $db, string $email)
+    public static function getUserByEmail(string $email)
     {
-        $stmt = $db->prepare(
+        $stmt = Db::getInstance()->prepare(
             "
             SELECT 
                 *

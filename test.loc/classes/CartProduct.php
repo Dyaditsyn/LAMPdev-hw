@@ -32,13 +32,43 @@ class CartProduct extends Product
         return $this->orderDate;
     }
 
-    // public function setSelectQuantity(): int
-    // {
-    //     $this->selectQuantity;
-    // }
-
-    // public function setOrderDate(): string
-    // {
-    //     $this->orderDate;
-    // }
+    public static function create(int $cartId, int $productId,  int $quantity): CartProduct
+    {
+        $orderDate = date("Y-m-d");
+        $stmt = Db::getInstance()->prepare(
+            "
+    INSERT INTO `test`.`cart_products` (
+        `cart_id`,
+        `product_id`,
+        `quantity`,
+        `order_date`
+    )
+    VALUES
+        (
+            :cart_id,
+            :product_id,
+            :quantity,
+            :order_date
+        )"
+        );
+        $stmt->execute(
+            [
+                "cart_id" => $cartId,
+                "product_id" => $productId,
+                "quantity" => $quantity,
+                "order_date" => $orderDate,
+            ]
+        );
+        $product = parent::getById($productId);
+        return new CartProduct(
+            $product->id,
+            $product->price,
+            $product->quantity,
+            $product->categoryId,
+            $product->name,
+            $quantity,
+            $orderDate,
+            $product->image
+        );
+    }
 }

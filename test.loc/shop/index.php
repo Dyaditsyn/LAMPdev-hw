@@ -1,7 +1,6 @@
 <?php
 
 require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "config.php";
-require_once FUNCTION_PATH . "db.php";
 require_once CLASSES_PATH . "Cart.php";
 require_once CLASSES_PATH . "Product.php";
 require_once CLASSES_PATH . "CartProduct.php";
@@ -11,7 +10,6 @@ if (empty($_SESSION['user_id'])) {
     die();
 }
 
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // $products = [
 //     ['name' => 'Apple iPhone 11 Pro Max', 'price' => 47999, 'quantity' => 15, 'category' => "Apple"],
 //     ['name' => 'Apple Watch Series 6 GPS', 'price' => 15799, 'quantity' => 21, 'category' => "Apple"],
@@ -22,28 +20,25 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // ];
 // file_put_contents(__DIR__ . DIRECTORY_SEPARATOR . 'products.json', json_encode($products));
 
-//$newProduct = unserialize($_SESSION['newProduct']);
-$products = Product::getAll($pdo);
+$products = Product::getAll();
 
-$cartProduct = new CartProduct(36, 1299, 14, 3, "Xiaomi Mi Smart Band 4 NFC", 1, "2020-12-12");
-var_dump($cartProduct);
-
-$cart = new Cart($_SESSION['user_id']);
 if (!empty($_POST['products'])) {
-
     if (!empty($_SESSION['cart_id'])) {
-        $cart->clearCart($pdo, $_SESSION['cart_id']);
+        $cart = Cart::getCartById($_SESSION['cart_id']);
+        $cart->clearCart();
     } else {
-        $_SESSION['cart_id'] = $cart->createCart($pdo, $_SESSION['user_id']);
+        $cart = Cart::create($_SESSION['user_id']);
+        $_SESSION['cart_id'] = $cart->getId();
     }
-
+    $cartProducts = [];
     foreach ($_POST['products'] as $product) {
         $quantity = $_POST['quantity_' . $product];
-        $cart->addProductToCart($pdo, $_SESSION['cart_id'], (int) $product, (int) $quantity);
+        $cartProducts[] = CartProduct::create($_SESSION['cart_id'], (int) $product, (int) $quantity);
     }
-
-    $_SESSION['products'] = $_POST['products'];
-    $_SESSION['cart'] = serialize($cart);
+    $cart->setProducts($cartProducts);
+    // echo "<pre>";
+    // print_r($cart);
+    // echo "</pre>";
     header("location: /shop/cart.php");
     die();
 }

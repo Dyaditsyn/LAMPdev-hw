@@ -12,12 +12,12 @@ class Admin extends User implements ChangePassword, Block
         $this->name = "Admin " . $name;
     }
 
-    public static function register(object $db, string $name, string $email, string $password, $type = self::TYPE): User
+    public static function register(string $name, string $email, string $password, $type = self::TYPE): User
     {
-        return parent::register($db, $name, $email, $password, $type);
+        return parent::register($name, $email, $password, $type);
     }
 
-    public function block(User $user, object $db): void
+    public function block(User $user): void
     {
         // if ($user::TYPE != User::TYPE) {
         //     return;
@@ -25,7 +25,7 @@ class Admin extends User implements ChangePassword, Block
         if ($user instanceof Admin) {
             return;
         }
-        $stmt = $db->prepare(
+        $stmt = Db::getInstance()->prepare(
             "
         UPDATE `test`.`users`
         SET `status` = :status

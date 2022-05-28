@@ -3,75 +3,109 @@
 
 class Cart
 {
-    public $cartId;
-    public $userId;
-    public $productId;
-    public $quantity;
-    public $orderDate;
+    private $id;
+    private $userId;
+    private $products;
 
-    public function __construct(int $userId, int $cartId = null)
-    {
-        if (!empty($cartId)) {
-            $this->cartId = $cartId;
-        }
+    public function __construct(
+        int $id,
+        int $userId,
+        array $products = []
+    ) {
+        $this->id = $id;
         $this->userId = $userId;
+        $this->products = $products;
     }
 
-    public function setQuantity(int $quantity): void
+    public function getId(): int
     {
-        $this->quantity = $quantity;
+        return $this->id;
     }
 
-    public function getQuantity(): int
-    {
-        return $this->quantity;
-    }
-
-    public function getOrderDate()
-    {
-        return $this->orderDate;
-    }
-
-    public function getProductId()
-    {
-        return $this->productId;
-    }
-
-    public function getUsertId()
+    public function geUserId(): int
     {
         return $this->userId;
     }
 
-    public function addProductToCart(object $connection, int $cartId, int $productId,  int $quantity = 1): int
+    public function getProducts(): array
     {
-        $stmt = $connection->prepare(
+        return $this->products;
+    }
+
+    public function setProducts(array $products)
+    {
+        $this->products = $products;
+    }
+
+    public function clearCart(): int
+    {
+        $this->products = [];
+        $stmt = Db::getInstance()->prepare(
             "
-    INSERT INTO `test`.`cart_products` (
-        `cart_id`,
-        `product_id`,
-        `quantity`,
-        `order_date`
-    )
-    VALUES
-        (
-            :cart_id,
-            :product_id,
-            :quantity,
-            DATE(NOW())
-        )"
+        DELETE FROM
+            `test`.`cart_products` 
+        WHERE
+            cart_id = :cart_id"
         );
         return $stmt->execute(
             [
-                "cart_id" => $cartId,
-                "product_id" => $productId,
-                "quantity" => $quantity
+                "cart_id" => $this->id,
             ]
         );
     }
 
-    function createCart(object $connection, int $userId): int
+    public static function getCartById($id): Cart
     {
-        $stmt = $connection->prepare("
+        $stmt = Db::getInstance()->prepare("
+            SELECT 
+                * 
+            FROM 
+                `test`.`cart`
+            WHERE `id` = :id
+                ");
+        $stmt->execute(
+            [
+                "id" => $id,
+            ]
+        );
+        $cart = $stmt->fetch();
+
+        $stmt = Db::getInstance()->prepare("
+            SELECT
+                `products`.*, 
+                `cart_products`.`quantity` as selected_qty,
+                `cart_products`.`order_date`
+            FROM
+                `test`.`products`
+            INNER JOIN `test`.`cart_products` ON `cart_products`.`product_id` = `products`.`id` 
+            WHERE
+                `test`.`cart_products`.`cart_id` = :cart_id   
+            ");
+        $stmt->execute(
+            [
+                "cart_id" => $id,
+            ]
+        );
+        $products = $stmt->fetchAll();
+        $cartProducts = [];
+        foreach ($products as $product) {
+            $cartProducts[] = new CartProduct(
+                $product['id'],
+                $product['price'],
+                $product['quantity'],
+                $product['category_id'],
+                $product['name'],
+                $product['selected_qty'],
+                $product['order_date'],
+                $product['image'],
+            );
+        }
+        return new Cart($cart['id'], $cart['user_id'], $cartProducts);
+    }
+
+    public static function create(int $userId): Cart
+    {
+        $stmt = Db::getInstance()->prepare("
         INSERT INTO `test`.`cart` ( 
             `user_id`
         )
@@ -85,63 +119,16 @@ class Cart
                 "user_id" => $userId,
             ]
         );
-        return $connection->lastInsertId();
+        $cartId = Db::getInstance()->lastInsertId();
+        return new Cart($cartId, $userId);
     }
 
-    public function clearCart(object $connection, int $cartId): int
+    public function calcTotalProductPrice(): float
     {
-        $stmt = $connection->prepare(
-            "
-        DELETE FROM
-            `test`.`cart_products` 
-        WHERE
-            cart_id = :cart_id"
-        );
-        return $stmt->execute(
-            [
-                "cart_id" => $cartId,
-            ]
-        );
-    }
-
-    public function getCartProducts(object $connection, int $cartId, int $page, int $perPage = 10)
-    {
-        $connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        $stmt = $connection->prepare("
-        SELECT
-            products.*, cart_products.quantity as selected_qty
-        FROM
-            test.products
-        INNER JOIN test.cart_products ON cart_products.product_id = products.id 
-        WHERE
-            test.cart_products.cart_id = :cart_id   
-        LIMIT " . $perPage . " OFFSET " . ($page - 1) * $perPage);
-        $stmt->execute(
-            [
-                "cart_id" => $cartId,
-            ]
-        );
-        return $stmt->fetchAll();
-    }
-
-    public function calcTotalProductPrice(object $connection, int $cartId)
-    {
-        $connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_COLUMN);
-        $stmt = $connection->prepare(
-            "
-        SELECT
-            sum(products.price * cart_products.quantity)
-        FROM
-            test.products
-        INNER JOIN test.cart_products ON cart_products.product_id = products.id 
-        WHERE
-            test.cart_products.cart_id = :cart_id"
-        );
-        $stmt->execute(
-            [
-                "cart_id" => $cartId,
-            ]
-        );
-        return $stmt->fetch();
+        $sum = 0;
+        foreach ($this->products as $product) {
+            $sum += $product->getPrice() * $product->getSelectQuantity();
+        }
+        return $sum;
     }
 }

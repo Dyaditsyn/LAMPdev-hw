@@ -21,20 +21,20 @@ require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR
                 <?php foreach ($products as $product) : ?>
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
-                            <?php if (!empty($product['image'])) : ?>
-                                <img class="img-fluid product-img" src="<?php echo $product['image']; ?> ">
+                            <?php if (!empty($product->getImage())) : ?>
+                                <img class="img-fluid product-img" src="<?php echo $product->getImage(); ?> ">
                             <?php else : ?>
                                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
                                     <title>Placeholder</title>
-                                    <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em"><?php echo $product['name']; ?></text>
+                                    <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em"><?php echo $product->getName(); ?></text>
                                 </svg>
                             <?php endif; ?>
                             <div class="card-body">
-                                <p class="card-text"><?php echo $product['name'] . " (" . $product['selected_qty'] . ")"; ?></p>
+                                <p class="card-text"><?php echo $product->getName() . " (" . $product->getSelectQuantity() . ")"; ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                     </div>
-                                    <small class="text-muted">$<?php echo number_format($product['price'], 2, '.', ','); ?></small>
+                                    <small class="text-muted">$<?php echo number_format($product->getPrice(), 2, '.', ','); ?></small>
                                 </div>
                             </div>
                         </div>

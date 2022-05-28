@@ -24,7 +24,7 @@ if (!empty($_POST)) {
     }
 
     if (empty($error)) {
-        $user = User::login($pdo, $_POST['email'], $_POST['password']);
+        $user = User::login($_POST['email'], $_POST['password']);
         if (!empty($user)) {
             $_SESSION['user_id'] = $user['user_id'];
             header("Location: /shop/index.php");
