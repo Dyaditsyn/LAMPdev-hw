@@ -5,6 +5,8 @@ require_once CLASSES_PATH . "AbstractUser.php";
 require_once CLASSES_PATH . "Interfaces" . DIRECTORY_SEPARATOR . "ChangePassword.php";
 require_once CLASSES_PATH . "User.php";
 
+use \Shop\User;
+
 if (!empty($_SESSION['user_id'])) {
     header("Location: /shop/login.php");
     die();

@@ -1,5 +1,6 @@
 <?php
 
+namespace Shop;
 
 abstract class AbstractUser
 {

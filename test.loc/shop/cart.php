@@ -6,6 +6,8 @@ require_once CLASSES_PATH . "Product.php";
 require_once CLASSES_PATH . "CartProduct.php";
 require_once CLASSES_PATH . "Cart.php";
 
+use \Shop\Cart;
+
 $cart = Cart::getCartById($_SESSION['cart_id']);
 $products = $cart->getProducts();
 $totalPrice = $cart->calcTotalProductPrice();

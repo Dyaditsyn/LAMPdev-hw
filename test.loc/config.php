@@ -23,4 +23,14 @@ require_once CLASSES_PATH . "Db.php";
 // }
 //$pdo = new PDO($dsn, DB_USER, DB_PASSWORD);
 
+spl_autoload_register(function ($class) {
+    // Получам путь к файлу из имени класс
+    // $path = __DIR__ . $class . 'php';
+    // // Если в текущей папке есть такой файл, то выполняем код из него
+    // if (file_exists($path)) {
+    //     require_once $path;
+    // }
+    // Если файла нет, то ничего не делаем
+});
+
 session_start(); // прописать в конфиге чтоб хранились сеансы пользователей

@@ -1,5 +1,9 @@
 <?php
 
+namespace Shop;
+
+use Shop\Interfaces\Block;
+use Shop\Interfaces\ChangePassword;
 
 class Admin extends User implements ChangePassword, Block
 {

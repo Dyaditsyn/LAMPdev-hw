@@ -1,5 +1,7 @@
 <?php
 
+namespace Shop;
+
 class Db // SIngleton class
 {
     private static $_instance;

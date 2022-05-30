@@ -1,5 +1,8 @@
 <?php
 
+namespace Shop\Interfaces;
+
+use Shop\User;
 
 interface Block
 {

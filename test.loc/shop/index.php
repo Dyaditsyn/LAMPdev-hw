@@ -1,9 +1,15 @@
 <?php
 
 require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "config.php";
-require_once CLASSES_PATH . "Cart.php";
 require_once CLASSES_PATH . "Product.php";
 require_once CLASSES_PATH . "CartProduct.php";
+require_once CLASSES_PATH . "Cart.php";
+require_once CLASSES_PATH . "Lib" . DIRECTORY_SEPARATOR . "Product.php";
+
+use \Shop\Product;
+use \Shop\Cart;
+use \Shop\CartProduct;
+use \Shop\Lib\Product as LibProduct;
 
 if (empty($_SESSION['user_id'])) {
     header("Location: /shop/login.php");

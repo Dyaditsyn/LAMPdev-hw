@@ -1,5 +1,8 @@
 <?php
 
+namespace Shop;
+
+use Shop\Interfaces\ChangePassword;
 
 class User extends AbstractUser implements ChangePassword
 {

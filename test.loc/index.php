@@ -18,8 +18,6 @@ require_once CLASSES_PATH . "Admin.php";
 // $admin = Admin::register($pdo, "Admin12", "admint12@test.com", "1111");
 // var_dump($admin);
 
-var_dump(User::login($pdo, "test23@test.com", "11112"));
-
 
 
 

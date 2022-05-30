@@ -1,6 +1,8 @@
 <?php
 
-namespace Shop;
+namespace Shop\Lib;
+
+use \Shop\Db;
 
 class Product
 {
@@ -33,7 +35,7 @@ class Product
     public static function getAll(): array
     {
         $products = [];
-        $stmt =  Db::getInstance()->query("SELECT * FROM `test`.`products`");
+        $stmt = Db::getInstance()->query("SELECT * FROM `test`.`products`");
         $productsArr = $stmt->fetchAll();
         foreach ($productsArr as $product) {
             $products[] = new Product(

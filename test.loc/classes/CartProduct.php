@@ -1,5 +1,6 @@
 <?php
 
+namespace Shop;
 
 class CartProduct extends Product
 {
