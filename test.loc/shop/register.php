@@ -39,12 +39,17 @@ if (!empty($_POST)) {
     //     }
     // }
 
-    $validation = new Validation($_POST);
+    foreach ($_POST as $k => $v) {
+        $error[$k] = Validation::notEmpty($k, $v);
+        continue;
+    }
 
-    $error = $validation->validateName(4, 8);
-    $error = $validation->checkEmailExist();
-    $error = $validation->validateEmail();
-    $error = $validation->validateNewPassword();
+    $error["name"] = $error["name"] ?? Validation::fieldLength("name", $_POST["name"], 4, 8);
+    $error["email"] = $error["email"] ?? Validation::validEmail($_POST["email"]);
+    $error["email"] = $error["email"] ?? Validation::checkExist($_POST["email"]);
+    $error["password"] = $error["password"] ?? Validation::confirm("password", $_POST["password"], $_POST["confirm_password"]);
+
+    $error = array_diff($error, array(null));
 
     if (empty($error)) {
         $user = User::register($_POST['name'],  $_POST['email'], $_POST['password']);

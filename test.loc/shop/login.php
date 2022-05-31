@@ -26,9 +26,13 @@ if (!empty($_POST)) {
     //         continue;
     //     }
     // }
-    $validation = new Validation($_POST);
-    $error = $validation->validateEmail();
-    $error = $validation->validatePassword();
+
+    foreach ($_POST as $k => $v) {
+        $error[$k] = Validation::notEmpty($k, $v);
+        continue;
+    }
+    $error["email"] = $error["email"] ?? Validation::validEmail($_POST["email"]);
+    $error = array_diff($error, array(null));
 
     if (empty($error)) {
         $user = User::login($_POST['email'], $_POST['password']);

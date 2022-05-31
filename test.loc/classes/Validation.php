@@ -4,86 +4,61 @@ namespace Shop;
 
 class Validation
 {
-
-    private $data;
-    private $errors = [];
-
-    public function __construct($postData)
+    public static function notEmpty(string $field, string $value)
     {
-        $this->data = $postData;
+        $val = trim($value);
+        if (empty($val)) {
+            return  'Field "' . self::breakAndCapField($field) . '" cannot be empty';
+        }
     }
 
-    public function validateName(int $min = 1, int $max = 255)
+    public static function fieldLength(string $field, string $val, int $min = 1, int $max = 255)
     {
-        $val = trim($this->data['name']);
-        if (empty($val)) {
-            $this->errors["name"] = "Name cannot be empty";
-            return $this->errors;
-        } elseif (strlen($val) < $min) {
-            $this->errors["name"] =  "name must be " . $min . " chars at least";
+        if (strlen($val) < $min) {
+            return 'Field "' . self::breakAndCapField($field) . '" must be ' . $min . ' chars at least';
         } elseif (strlen($val) > $max) {
-            $this->errors["name"] = "name must be up to " . $max . " chars long";
+            return 'Field "' . self::breakAndCapField($field) . '" must be up to ' . $max . ' chars long';
         }
-        return $this->errors;
     }
 
-    public function validateEmail()
+    public static function validEmail(string $val)
     {
-
-        $val = trim($this->data['email']);
-
-        if (empty($val)) {
-            $this->errors["email"] = "Email cannot be empty";
-            return $this->errors;
-        } elseif (!filter_var($val, FILTER_VALIDATE_EMAIL)) {
-            $this->errors["email"] =  "Email must be a valid email address";
-            return $this->errors;
+        if (!filter_var($val, FILTER_VALIDATE_EMAIL)) {;
+            return  "Email must be a valid email address";
         }
     }
 
-    public function checkEmailExist(string $table = "`test`.`users`", string $column = "email")
+    public static function checkExist(string $val,  string $column = "email", string $table = "`test`.`users`")
     {
         $stmt = Db::getInstance()->prepare(
             "
             SELECT 
                 *
             FROM
-                $table 
+            $table
             WHERE
                 `$column` = :$column"
         );
         $stmt->execute(
             [
-                "$column" => $this->data['email'],
+                "$column" => $val,
             ]
         );
         $res = $stmt->fetch();
         if (!empty($res)) {
-            $this->errors["email"] =  "Email is used";
-            return $this->errors;
+            return  self::breakAndCapField($column) . ' is used';
         }
     }
 
-    public function validateNewPassword()
+    public static function confirm(string $field, string $val1, string $val2)
     {
-        $pas1 = trim($this->data['password']);
-        $pas2 = trim($this->data['confirm_password']);
-
-        if (empty($pas1) || (empty($pas2))) {
-            $this->errors["password"] = "Password cannot be empty";
-            return $this->errors;
-        } elseif ($pas1 != $pas2) {
-            $this->errors["confirm_password"] =  "Passwords don't match";
+        if ($val1 != $val2) {
+            return self::breakAndCapField($field) . " don't match";
         }
-        return $this->errors;
     }
 
-    public function validatePassword()
+    private function breakAndCapField(string $field)
     {
-        $pas1 = trim($this->data['password']);
-        if (empty($pas1)) {
-            $this->errors["password"] = "Password cannot be empty";
-            return $this->errors;
-        }
+        return ucfirst(str_replace("_", " ", $field));
     }
 }
