@@ -11,7 +11,7 @@ require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                     </div>
-                    <input name="email" class="form-control <?php echo (!empty($error['email'])  ? 'is-invalid' :  ' ') ?>" placeholder="Email address" type="email" value="<?php echo ($_POST['email'] ?? ' ') ?>">
+                    <input name="email" class="form-control <?php echo (!empty($error['email'])  ? 'is-invalid' :  ' ') ?>" placeholder="Email address" type="email" value="<?php echo htmlspecialchars(($_POST['email']) ?? ' ') ?>">
                     <div class="invalid-feedback">
                         <?php echo ($error['email'] ?? ' ')  ?>
                     </div>
@@ -20,7 +20,7 @@ require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                     </div>
-                    <input name="password" class="form-control <?php echo (!empty($error['password'])  ? 'is-invalid' :  ' ') ?>" placeholder="Create password" type="password">
+                    <input name="password" class="form-control <?php echo (!empty($error['password'])  ? 'is-invalid' :  ' ') ?>" placeholder="Password" type="password">
                     <div class="invalid-feedback">
                         <?php echo ($error['password'] ?? ' ')  ?>
                     </div>

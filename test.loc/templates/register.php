@@ -11,7 +11,7 @@ require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
-                    <input name="name" class="form-control <?php echo (!empty($error['name']) ? 'is-invalid' : ' ') ?>" placeholder="Full name" type="text" value="<?php echo ($_POST['name'] ?? '') ?>">
+                    <input name="name" class="form-control <?php echo (!empty($error['name']) ? 'is-invalid' : ' ') ?>" placeholder="Full name" type="text" value="<?php echo htmlspecialchars(($_POST['name']) ?? '') ?>">
                     <div class="invalid-feedback">
                         <?php echo ($error['name'] ?? ' ')  ?>
                     </div>
@@ -20,7 +20,7 @@ require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                     </div>
-                    <input name="email" class="form-control <?php echo (!empty($error['email'])  ? 'is-invalid' : ' ') ?>" placeholder="Email address" type="email" value="<?php echo ($_POST['email'] ?? '') ?>">
+                    <input name="email" class="form-control <?php echo (!empty($error['email'])  ? 'is-invalid' : ' ') ?>" placeholder="Email address" type="email" value="<?php echo htmlspecialchars(($_POST['email']) ?? '') ?>">
                     <div class="invalid-feedback">
                         <?php echo ($error['email'] ?? ' ')  ?>
                     </div>
