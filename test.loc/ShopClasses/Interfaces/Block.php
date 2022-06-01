@@ -1,8 +1,8 @@
 <?php
 
-namespace Shop\Interfaces;
+namespace ShopClasses\Interfaces;
 
-use Shop\User;
+use ShopClasses\User;
 
 interface Block
 {

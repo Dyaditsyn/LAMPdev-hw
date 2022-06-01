@@ -1,6 +1,6 @@
 <?php
 
-namespace Shop;
+namespace ShopClasses;
 
 class Db // SIngleton class
 {
@@ -9,9 +9,9 @@ class Db // SIngleton class
     private function __construct()
     {
         self::$_instance = new \PDO(
-            'mysql:host=localhost;dbname' . DB_NAME,
-            DB_USER,
-            DB_PASSWORD,
+            'mysql:host=localhost;dbname' . $_ENV['DB_NAME'],
+            $_ENV['DB_USER'],
+            $_ENV['DB_PASSWORD'],
             [
                 \PDO::ATTR_ERRMODE                           => \PDO::ERRMODE_EXCEPTION,
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC

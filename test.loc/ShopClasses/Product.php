@@ -1,6 +1,6 @@
 <?php
 
-namespace Shop;
+namespace ShopClasses;
 
 class Product
 {

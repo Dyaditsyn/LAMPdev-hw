@@ -1,8 +1,8 @@
 <?php
 
-namespace Shop\Lib;
+namespace ShopClasses\Lib;
 
-use \Shop\Db;
+use \ShopClasses\Db;
 
 class Product
 {

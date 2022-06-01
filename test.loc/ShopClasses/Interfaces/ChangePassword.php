@@ -1,6 +1,6 @@
 <?php
 
-namespace Shop\Interfaces;
+namespace ShopClasses\Interfaces;
 
 interface ChangePassword
 {

@@ -2,11 +2,11 @@
 
 require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "config.php";
 require_once FUNCTION_PATH . "db.php";
-require_once CLASSES_PATH . "Product.php";
-require_once CLASSES_PATH . "CartProduct.php";
-require_once CLASSES_PATH . "Cart.php";
+//require_once CLASSES_PATH . "Product.php";
+//require_once CLASSES_PATH . "CartProduct.php";
+//require_once CLASSES_PATH . "Cart.php";
 
-use \Shop\Cart;
+use \ShopClasses\Cart;
 
 $cart = Cart::getCartById($_SESSION['cart_id']);
 $products = $cart->getProducts();
