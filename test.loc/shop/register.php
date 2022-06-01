@@ -1,10 +1,6 @@
 <?php
 
 require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "config.php";
-require_once CLASSES_PATH . "AbstractUser.php";
-require_once CLASSES_PATH . "Interfaces" . DIRECTORY_SEPARATOR . "ChangePassword.php";
-require_once CLASSES_PATH . "User.php";
-require_once CLASSES_PATH . "Validation.php";
 
 use \ShopClasses\User;
 use \ShopClasses\Validation;

@@ -1,10 +1,6 @@
 <?php
 
 require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "config.php";
-//require_once CLASSES_PATH . "Product.php";
-//require_once CLASSES_PATH . "CartProduct.php";
-//require_once CLASSES_PATH . "Cart.php";
-//require_once CLASSES_PATH . "Lib" . DIRECTORY_SEPARATOR . "Product.php";
 
 use \ShopClasses\Product;
 use \ShopClasses\Cart;
