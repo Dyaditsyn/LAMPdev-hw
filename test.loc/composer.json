@@ -1,7 +1,8 @@
 {
   "name": "test/test",
   "require": {
-    "vlucas/phpdotenv": "^5.4"
+    "vlucas/phpdotenv": "^5.4",
+    "monolog/monolog": "^2.6"
   },
   "autoload": {
     "psr-4": {

@@ -4,6 +4,8 @@ require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "config.php";
 
 use \ShopClasses\User;
 use \ShopClasses\Validation;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 if (!empty($_SESSION['user_id'])) {
     header("Location: /shop/login.php");
@@ -12,6 +14,8 @@ if (!empty($_SESSION['user_id'])) {
 
 $error = [];
 if (!empty($_POST)) {
+
+
     // foreach ($_POST as $k => $v) {
     //     if (empty($v)) {
     //         $error[$k] = "Field should be filled";
@@ -36,6 +40,9 @@ if (!empty($_POST)) {
     // }
 
     foreach ($_POST as $k => $v) {
+        $logger = new Logger($k);
+        $logger->pushHandler(new StreamHandler(ROOT_PATH . '/logs/app.log', Logger::DEBUG));
+        $logger->info($v);
         $error[$k] = Validation::notEmpty($k, $v);
         continue;
     }
@@ -47,14 +54,19 @@ if (!empty($_POST)) {
 
     $error = array_diff($error, array(null));
 
+    $logger = new Logger('Registration status');
+    $logger->pushHandler(new StreamHandler(ROOT_PATH . '/logs/app.log', Logger::DEBUG));
+
     if (empty($error)) {
         $user = User::register($_POST['name'],  $_POST['email'], $_POST['password']);
+        $logger->info('Succes');
         if (!empty($user)) {
             $_SESSION['user_id'] = $user->id;
             header("Location: /shop/index.php");
             die();
         }
     }
+    $logger->info('Failed');
 }
 
 require_once ROOT_PATH . DIRECTORY_SEPARATOR . "templates" . DIRECTORY_SEPARATOR . "register.php";
