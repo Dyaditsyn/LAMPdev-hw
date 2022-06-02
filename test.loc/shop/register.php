@@ -38,6 +38,9 @@ if (!empty($_POST)) {
     //         continue;
     //     }
     // }
+    // if ($_POST['password'] != $_POST['confirm_password']) {
+    //     $error[$k] = "Passwords don't match";
+    // }
 
     foreach ($_POST as $k => $v) {
         $logger = new Logger($k);
